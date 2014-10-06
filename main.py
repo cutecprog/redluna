@@ -2,8 +2,21 @@
 # This file currently holds the entire game.
 #------------------------------------------------------------------------------
 
+# Example function demonstrating project coding style
+def foo():
+        """ Print out a pointless statement and return a meaningless string.
+
+        >>> foo()
+        Foo doesn't really do anything
+        'what foo returns'
+
+        """
+        print "Foo doesn't really do anything"
+        return "what foo returns"
+
 def main(debug=False):
         """ Run the game.
+
         >>> main(True)
         Red Luna
 
@@ -11,7 +24,8 @@ def main(debug=False):
         print "Red Luna"
         if debug:
                 return # Exit main
-        
+
+        # the game
         print question("Ain't 'em pretty?", ["yes","no","the question is wrong"])
 
 def question(question, valid_responses, debug=False):
@@ -34,7 +48,9 @@ def question(question, valid_responses, debug=False):
                 if response in valid_responses:
                         return response
 
-if __name__=="__main__": # check if this file is being executed
+# if this file is being executed 
+# then check for commend line args, run doctests, run main()
+if __name__=="__main__":
         from sys import argv
         if "-h" in argv or "--help" in argv:
                 print "Red Luna is a text adventure game.\n"
