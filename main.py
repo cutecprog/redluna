@@ -3,15 +3,15 @@
 #------------------------------------------------------------------------------
 
 # Example function demonstrating project coding style
-def foo():
-        """ Print out a pointless statement and return a meaningless string.
+def foo(bar):
+        """ Print parameter bar and return a meaningless string.
 
-        >>> foo()
+        >>> foo("Foo doesn't really do anything")
         Foo doesn't really do anything
         'what foo returns'
 
         """
-        print "Foo doesn't really do anything"
+        print bar
         return "what foo returns"
 
 def main(debug=False):
