@@ -2,8 +2,16 @@
 # This file currently holds the entire game.
 #------------------------------------------------------------------------------
 
-def main():
+def main(debug=False):
+        """ Run the game.
+        >>> main(True)
+        Red Luna
+
+        """
         print "Red Luna"
+        if debug:
+                return # Exit main
+        
         print question("Ain't 'em pretty?", ["yes","no","the question is wrong"])
 
 def question(question, valid_responses, debug=False):
@@ -15,6 +23,7 @@ def question(question, valid_responses, debug=False):
         - no
         - maybe
         'yes'
+
         """
         print question
         # print valid responses
@@ -25,8 +34,7 @@ def question(question, valid_responses, debug=False):
                 if response in valid_responses:
                         return response
 
-# check if this file is being executed
-if __name__=="__main__":
+if __name__=="__main__": # check if this file is being executed
         from sys import argv
         if "-h" in argv or "--help" in argv:
                 print "Red Luna is a text adventure game.\n"
@@ -37,5 +45,4 @@ if __name__=="__main__":
 
         from doctest import testmod
         testmod() # run all doctest
-
         main() # run my function
