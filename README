@@ -1,0 +1,6 @@
+Red Luna is a text adventure game.
+
+Options:
+ -h or --help		Prints this menu
+ -v			Verbose mode for doctest
+
