@@ -44,6 +44,8 @@ def question(question, valid_responses, debug=False):
         for valid_response in valid_responses:
                 print "-", valid_response
         while True:
+                # get user input if not in debug mode
+                # else use first item from valid_response list.
                 response = raw_input() if not debug else valid_responses[0]
                 if response in valid_responses:
                         return response
