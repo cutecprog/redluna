@@ -18,6 +18,9 @@ def main(args, debug=False):
 
         # the game
         print question("Ain't 'em pretty?", ["yes","no","mayhaps"])
+        print question("What's your favoriate color", ["purple","blue","red", \
+                                                "yellow", "torquoise", "aqua",\
+                                                "orange", "green"])
 
 def question(question, valid_responses, debug=False):
         """ Ask a question and wait for a valid response.
