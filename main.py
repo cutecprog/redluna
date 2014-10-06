@@ -55,6 +55,7 @@ def question(question, valid_responses, debug=False):
 if __name__=="__main__":
         from sys import argv
         if "-h" in argv or "--help" in argv:
+                # open README and print its contents
                 with open("README", "r") as readme_file:
                         print readme_file.read()
                 exit()
