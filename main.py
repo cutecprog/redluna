@@ -2,31 +2,22 @@
 # This file currently holds the entire game.
 #------------------------------------------------------------------------------
 
-# Example function demonstrating project coding style
-def foo(bar):
-        """ Print parameter bar and return a meaningless string.
+def main(args, debug=False):
+        """ Print args and if not in debug start the game.
 
-        >>> foo("Foo doesn't really do anything")
-        Foo doesn't really do anything
-        'what foo returns'
-
-        """
-        print bar
-        return "what foo returns"
-
-def main(debug=False):
-        """ Run the game.
-
-        >>> main(True)
-        Red Luna
+        >>> main("This could be anything", True)
+        This could be anything
+        'what is returned when debug is True'
 
         """
-        print "Red Luna"
+        print args
+
+        # if debug mode, return a meaningless string that the doctest expects
         if debug:
-                return # Exit main
+                return "what is returned when debug is True"
 
         # the game
-        print question("Ain't 'em pretty?", ["yes","no","the question is wrong"])
+        print question("Ain't 'em pretty?", ["yes","no","mayhaps"])
 
 def question(question, valid_responses, debug=False):
         """ Ask a question and wait for a valid response.
@@ -62,4 +53,4 @@ if __name__=="__main__":
 
         from doctest import testmod
         testmod() # run all doctest
-        main() # run my function
+        main("Red Luna") # run my function
