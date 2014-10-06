@@ -29,7 +29,10 @@ def question(question, valid_responses, debug=False):
 if __name__=="__main__":
         from sys import argv
         if "-h" in argv or "--help" in argv:
-                print "Red Luna is a text adventure game."
+                print "Red Luna is a text adventure game.\n"
+                print "Options:"
+                print " -h or --help\t\tPrints this menu"
+                print " -v\t\t\tVerbose mode for doctest\n"
                 exit()
 
         from doctest import testmod
