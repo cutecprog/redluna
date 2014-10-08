@@ -47,7 +47,7 @@ def question(question, valid_responses, debug=False):
 
 # if this file is being executed 
 # then check for commend line args, run doctests, run main()
-if __name__=="__main__":
+if __name__ == "__main__":
         from sys import argv
         if "-h" in argv or "--help" in argv:
                 # open README and print its contents
