@@ -3,12 +3,13 @@
 #-------------------------------------------------------------------------------
 
 import unittest
-import lib
+from lib import word
 
 class TestSequenceFunctions(unittest.TestCase):
-        def setUp():
-                # do nothing
-                return
-
+        def setUp(self):
+                self.meaningless = word()
+        def test_word(self):
+                self.assertEqual(type(self.meaningless.synonym_list), type([]))
+                                                # sloppy test case
 if __name__ == "__main__":
         unittest.main()
