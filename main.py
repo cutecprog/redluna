@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# This file currently holds the entire game.
+# This file currently holds the entire game
 #-------------------------------------------------------------------------------
 
 def main(args, debug=False):
