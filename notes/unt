@@ -27,6 +27,24 @@ answer
 
 ---
 
+Example character: The Cook
+
+Greet. I [cook]<> for the [orphans]<>. I can cook you [something]<>.
+cook<where>: In the [kitchen]<> over their. (point to kitchen)
+cook<why>: {State motivation}
+cook<when>: At dawn and dusk.
+cook<what>: {list recipes}
+cook<who>: (angered + 4) We talk [not]<> about that.
+cook<who>.not<who>: (trust - 2)(angered + 8) He dead of famon. (trust + 5)
+cook<who>.not<what>: (trust - 1)(angered + 5) The famon. (trust + 3)
+cook<who>.not<why>: (angered + 3) We talk not of dark days. (trust + 1)
+cook<how>
+        
+{wait +4s}
+(awkward) You get [setup]<>. This is [home]<> [now]<>.
+
+---
+
 Characters have emotions based on Plutnik's emotional wheel. Maybe prioritized
 motivations and/or a rating of how well they know these priorities. That's
 probably to general and it makes sense that people would act somewhat one
