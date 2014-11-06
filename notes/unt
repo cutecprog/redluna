@@ -25,19 +25,19 @@ exposition/description
 question
 answer
 
-(Capture by slaver and put a a ship the travelled for some time until a storm
-destroyed it and you wash up ashore)
-You're in a strange land now. You speak the empiral language but here they don't
-seem to to speak it quite right. A word here and there is intelligable but the
-man that is yelling at you registers nothing in your mind.
-Will you?
-- Move away from him [Fast, cautiously]
-- Move toward him [Aggressively, cautiously, causally]
-- Focus on his words
-- Inspect your area [In front and behind him, on either side of him]
-- Inspect the man
+---
 
-Inspect, focus on, look at, listen to, ....
+Characters have emotions based on Plutnik's emotional wheel. Maybe prioritized
+motivations and/or a rating of how well they know these priorities. That's
+probably to general and it makes sense that people would act somewhat one
+dimensional to a child.
+
+The main substance of a character is their set of knowledge and to a more minor
+degree their manner of speaking. They would then have their relationships to
+others (most likely only coming into play at the end). If they feel they had a
+part in the plague. Their current emotional state which would effect how they
+are currently talking to you and possibly also be an active mechcanic throughout
+the end. And finally other motives.
 
 ---
 
