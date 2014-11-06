@@ -1,0 +1,89 @@
+Types of answers a question can have:
+        choice (enter a choice between options)
+        numeric (enter a numerical representable value)
+        literate (enter a word; often setting or testing a synonym)
+        logical (enter a literate logical statement)
+
+direct answer
+direct lie
+change subject
+avoid answer
+answer without really answering anything
+truth but leave out info
+...
+
+catagorical
+analytical
+counter-question
+the question is wrong
+
+descriptive (chcek for exist or process)
+relational (check relations between variables)
+casual (check for corralation between actions of variables)
+
+exposition/description
+question
+answer
+
+(Capture by slaver and put a a ship the travelled for some time until a storm
+destroyed it and you wash up ashore)
+You're in a strange land now. You speak the empiral language but here they don't
+seem to to speak it quite right. A word here and there is intelligable but the
+man that is yelling at you registers nothing in your mind.
+Will you?
+- Move away from him [Fast, cautiously]
+- Move toward him [Aggressively, cautiously, causally]
+- Focus on his words
+- Inspect your area [In front and behind him, on either side of him]
+- Inspect the man
+
+Inspect, focus on, look at, listen to, ....
+
+---
+
+Okay game is procedurally generated within the structure of a village that just
+went through a plague and game will end in a witch hunt. Your play as a curious,
+orphaned child trying to find his or her place in the remaining village. Most
+conversations with be of a informational nature and there will be emphasized
+words that you can ask about. You can ask what any word means and depending on
+the person they may define it. The evidence and information you may need to calm
+the hysteria at the end of the game or to help determine the witch will not be
+things obvious but might be emphasized text. The actual set of living people and
+cause of the epidemic will be what is procedural generated has well has what
+technics people use for their trade.
+
+Their will always be a scientifically minded foriegner who after hearing word of
+the epidemic came to study it and help those inflicted. He or she is most likely
+to be the victem of the witch hunt. In some games it may just be that the
+foriegner knowingly contaminated the village in order to study it. The word
+choice of the people in the game will should also be procedurally generated and
+should not be telling to who or what done it.
+
+The game will be in Anglish so a first time player will have the vocabulary of
+the child they are playing. Also this may disguise the strange lingos generated
+procedurally. The game should be easy to mod to change the language of use a 
+pigeon to help in learning a language although this won't be an initial feature.
+Most lingos for people should be in simplified English with Anglish vocab but
+some folk will use more poetic or obfuscated lanaugue.
+
+There isn't a wrong way to play this game or a notable bad ending if you don't
+do the right things. This game should be curiousity driven; the game should be a
+gamified wiki page with personal narrative. All schedules and choices of
+characters are preset at the beginning of the game. While your actions effect
+things in minor ways, and you can collect items, the main way you effect people
+is by what they think of you. There is a game clock that does run through 
+conversations but the majority of the game time that passes actions is not done
+in real time (eg walk across the village, or collecting tree bark).
+
+At the start of the witch hunt you actions start mattering a lot and what people
+think about you is basically set as well as your ability to collect items. Time
+is very limited in this part of the game so conversation will happen very
+quickly and there won't be much moving around: at the start of the witch hunt
+everything is in real time.
+
+Game can be paused at anytime be pressing ESC: the screen goes black and the
+audio stops. The game can be saved at any moment but there can only be one save,
+for a given playthrough, and upon loading you are not longer able to load the
+save again. The game should have a very frequent autosave and therefore ability
+to minimize the effect of a game crash.
+
