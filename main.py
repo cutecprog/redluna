@@ -38,7 +38,7 @@ def question(question, valid_responses, debug=False):
         # print valid responses
         for valid_response in valid_responses:
                 print "-", valid_response
-        while True: # endless loop
+        while True: # valid input loop
                 # get user input if not in debug mode
                 # else use first item from valid_response list.
                 response = raw_input() if not debug else valid_responses[0]
