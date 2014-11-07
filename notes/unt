@@ -1,47 +1,21 @@
-Types of answers a question can have:
-        choice (enter a choice between options)
-        numeric (enter a numerical representable value)
-        literate (enter a word; often setting or testing a synonym)
-        logical (enter a literate logical statement)
+Gameplay:
 
-direct answer
-direct lie
-change subject
-avoid answer
-answer without really answering anything
-truth but leave out info
-...
+Player presented with a tenitive prompt of text with essentially embedded hyper
+text that can be clicked on or typed. Pages aren't in a tree and a character is
+a collection of simple english wiki prompts (likely only 150 words max) and a
+manner of speaking. I'm thinking now that characters are premade but their
+knowledge various from game to game and each game only has a limited sample of
+them.
 
-catagorical
-analytical
-counter-question
-the question is wrong
+A disproportionate amount of university students survived do to better means of
+isolation and by their view their viture. Bodies were burnt the sick were kill
+in mass. Only about 150 or so people had the potiential to survive. You got sick
+before the killings and were the only one to recover from the plague.
 
-descriptive (chcek for exist or process)
-relational (check relations between variables)
-casual (check for corralation between actions of variables)
-
-exposition/description
-question
-answer
-
----
-
-Example character: The Cook
-
-Greet. I [cook]<> for the [orphans]<>. I can cook you [something]<>.
-cook<where>: In the [kitchen]<> over their. (point to kitchen)
-cook<why>: {State motivation}
-cook<when>: At dawn and dusk.
-cook<what>: {list recipes}
-cook<who>: (angered + 4) We talk [not]<> about that.
-cook<who>.not<who>: (trust - 2)(angered + 8) He dead of famon. (trust + 5)
-cook<who>.not<what>: (trust - 1)(angered + 5) The famon. (trust + 3)
-cook<who>.not<why>: (angered + 3) We talk not of dark days. (trust + 1)
-cook<how>: 
-        
-{wait +4s}
-(awkward) You get [setup]<>. This is [home]<> [now]<>.
+Of the 150 potiential surviviors one or several were the intentional or
+unintentional cause. If intentional then these folk have a better chance at
+surviving. Basically there are a set of senerios with interchangable characters
+and vastly overlapping clues.
 
 ---
 
@@ -68,11 +42,6 @@ because winter is just ending. People are just one dimension and cold.
 
 ---
 
-Characters have emotions based on Plutnik's emotional wheel. Maybe prioritized
-motivations and/or a rating of how well they know these priorities. That's
-probably to general and it makes sense that people would act somewhat one
-dimensional to a child.
-
 The main substance of a character is their set of knowledge and to a more minor
 degree their manner of speaking. They would then have their relationships to
 others (most likely only coming into play at the end). If they feel they had a
@@ -97,16 +66,6 @@ rational here is that you've pick up on his fancy dialect and he's been teaching
 you things. Now that you are fully recovered from the plague (the only one to do
 so) he thinks it best if you start interacting more with the rest of the village
 because he will be moving on soon and you must find a place.
-
-He will also serve as a basic tutorial of how to interact with people and be a
-source for more science and mathy information.
-
-The game takes place from mid-spring to early summer. The starts with the
-arrival of a cleric to the village to offically investigate the cause of the
-plague. This character being only inquestive by nature has no knowledge that he
-will tell you (or there will be a special religious knowledge set that he will
-have; maybe even a randomly choosen or player choosen out of a set of
-religions). The cleric is the instagator of the witch hunt.
 
 --- START HERE
 
