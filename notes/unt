@@ -38,10 +38,33 @@ cook<who>: (angered + 4) We talk [not]<> about that.
 cook<who>.not<who>: (trust - 2)(angered + 8) He dead of famon. (trust + 5)
 cook<who>.not<what>: (trust - 1)(angered + 5) The famon. (trust + 3)
 cook<who>.not<why>: (angered + 3) We talk not of dark days. (trust + 1)
-cook<how>
+cook<how>: 
         
 {wait +4s}
 (awkward) You get [setup]<>. This is [home]<> [now]<>.
+
+---
+
+Dialog trees are too ambigious. The idea is that it's more like a wiki with some
+links require that you walk about or go do a task that takes time. Each word
+takes time too and pages are only displayed to the user for a limited amount of
+time. There is a certain about of times a person will repeat themself in a time
+interval and may ramble a bit before repeating. No leveling up but maybe
+preset atrributes like, the following,
+likeability: will repeat themselves more and require less for locked links;
+fitness: moves faster between areas and completes task quicker;
+good memory: balance method of recalling old pages and have pages up for longer.
+
+Also there will a setting to increase or decrease reading times. Effectively a
+difficulty setting. Also a language setting which out of the box is simple
+english, english, and anglish as the default setting.
+
+Knowing information and passing test questions increases your likeability to
+that person.
+
+There is a university in the town of Addle so knowledge from characters is
+diverse while being limit in one game do to the plague. No one has left yet
+because winter is just ending. People are just one dimension and cold.
 
 ---
 
