@@ -1,3 +1,19 @@
+The hardest part about this game will be the translation from simple english to
+the anglish + manner of speaking. But this isn't the core gameplay.
+
+I need to iterate and play test this thing quickly.
+
+Core gameplay is wiki prompts that disappear and the allows the user to type the
+names of hypertext to go to a new wiki prompt. There is an in game timer. Maybe
+text comes word by word and disappears when complete. Interrupting can be
+seen as rude. Words only stay appeared for like 10 seconds or something like
+that. After scolling down to a certain point the text either scrolls up or
+restarts at the top. This stuff doesn't matter though; it's just display stuff.
+
+In the play test there are two characters who will fight over some conflict.
+
+---
+
 Gameplay:
 
 Player presented with a tenitive prompt of text with essentially embedded hyper
