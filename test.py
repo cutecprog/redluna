@@ -3,17 +3,22 @@
 #-------------------------------------------------------------------------------
 
 import unittest
-from lib import word
+from lib import prompt
 
 class TestSequenceFunctions(unittest.TestCase):
         def setUp(self):
-                self.meaningless = word()
+                pass
 
-        def test_word(self):
-                self.assertEqual(type(self.meaningless.get_synonyms()), list)
-                friend = ['friend','pal','conrad','ally']
-                self.assertEqual(word(friend).get_synonyms(), friend)
-
+        def test_prompt(self):
+                text = "While [torging] through the [toads] the man [trills]."
+                test_prompt = None
+                try:
+                        test_prompt = prompt(text)
+                except:
+                        print "Error"
+                self.assertNotEqual(test_prompt, None)
+                self.assertEqual(test_prompt.text, text)
+                self.assertEqual(test_prompt.links, ['torging','toads','trills'])
 
 if __name__ == "__main__":
         unittest.main()
