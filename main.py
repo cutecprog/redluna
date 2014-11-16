@@ -9,9 +9,9 @@ from atexit import register  # For clean up function
 from os import system, popen
 
 def main():
-        story = prompt(20, 60,\
-"""Long ago when the [moon shone true] a [girl] like you climbed that tree. Her hair
-wasn't as fair and she wasn't nearly as inquisitive of her elder folk. [She died].""")
+        story = None
+        with open('data/start', 'r') as f:
+                story = prompt(20, 60, f.read())
         init()
         #print story.links
         story.display()
@@ -39,7 +39,6 @@ def loop(story):
 @register
 def goodbye():
         system('setterm -cursor on')
-        #loop_process.terminate()
         print '\033[0m'
         system('clear')
 

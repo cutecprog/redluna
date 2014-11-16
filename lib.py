@@ -115,7 +115,7 @@ class prompt(object):
                         elif ch == 'C':                  # right arrow
                                 pass
                         elif ch == 'D':                  # left arrow
-                                pass
+                                self.reset(self.text)
                 elif ch == '\r':                          # return
                         if self.user_input == "":
                                 return
@@ -128,10 +128,15 @@ class prompt(object):
                                 save()
                         elif command.group(3):
                                 save(command.group(4))
+                        link = self.links.match(self.user_input.lower())
+                        if not link:
+                                pass
+                        else:
+                                self.reset(link.group(0))
+                                                
                         self.user_input = ""
                         print '\033[0m'
                         print_loc(' '*80, self.y+5, self.x+2)
-                        print_loc(str(self.head), self.y+5, self.x+10)
                 elif ch == '\x7f':                      # backspace
                         if self.user_input == "":
                                 return
