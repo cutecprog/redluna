@@ -104,8 +104,19 @@ class prompt(object):
                 """
                 ch = getch()
                 if ch == '\x1b':                        # escape
-                        exit()
-                if ch == '\r':                          # return
+                        ch = getch()
+                        if ch != '[':
+                                exit()
+                        ch = getch()
+                        if ch == 'A':                    # up arrow
+                                pass
+                        elif ch == 'B':                  # down arrow
+                                pass
+                        elif ch == 'C':                  # right arrow
+                                pass
+                        elif ch == 'D':                  # left arrow
+                                pass
+                elif ch == '\r':                          # return
                         if self.user_input == "":
                                 return
                         command = command_list.match(self.user_input)
