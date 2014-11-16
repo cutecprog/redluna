@@ -28,20 +28,19 @@ def save(filename = str(int(time()))):
 
 class prompt(object):
         def __init__(self, y, x, text, start_head = 0, start_tail = 5):
-                self.prompt_time = time()
-                self.head_start_time = 0
-                self.tail_start_time = 0
                 self.text = text
-                self.length = len(text)
+                self.length = len(self.text)
                 index = 0
-                self.links = []
-                for ch in text:
+                links = ""
+                for ch in self.text:
                         if ch == '[':
-                                self.links.append("")
+                                links += "(^"
                         elif ch == ']':
+                                links += ")\s*$|"
                                 index += 1
-                        elif len(self.links) > index:
-                                self.links[index] += ch
+                        elif links[-1:] != '|' and links != "":
+                                links += ch
+                self.links = compile(links[:-1].lower())
                 self.lines = len(self.text.split('\n'))
                 self.y          = y
                 self.x          = x
@@ -53,6 +52,9 @@ class prompt(object):
                 self.tail_y     = 0
                 self.text_color = '\033[0m'
                 self.user_input = ""
+                self.prompt_time = time()
+                self.head_start_time = 0
+                self.tail_start_time = 0
 
         def head_pass(self):
                 self.head_start_time = time()
@@ -131,8 +133,7 @@ class prompt(object):
                 else:                                   # all else
                         self.user_input += ch
                 # Highlight valid user input
-                if self.user_input.lower() in self.links:
-                        print self.user_input.lower()
+                if self.links.match(self.user_input.lower()):
                         print '\033[0m\033[96m\033[4m'
                 elif command_list.match(self.user_input):
                         print '\033[0m\033[1m\033[92m'

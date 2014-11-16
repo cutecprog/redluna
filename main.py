@@ -15,7 +15,7 @@ wasn't as fair and she wasn't nearly as inquisitive of her elder folk. [She died
 def main():
         global story
         init()
-        print story.links
+        #print story.links
         story.display()
         story.pause()
         loop_process.start()
@@ -25,7 +25,7 @@ def main():
 def init():
         print '\033[0m'
         system('setterm -cursor off')
-        system('clear')
+        #system('clear')
 
 def loop():
         global story
