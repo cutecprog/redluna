@@ -101,9 +101,9 @@ class prompt(object):
 
                 """
                 ch = getch()
-                if ch == '\x1b':                # escape
+                if ch == '\x1b':                        # escape
                         exit()
-                if ch == '\r':                  # return
+                if ch == '\r':                          # return
                         if self.user_input == "":
                                 return
                         command = command_list.match(self.user_input)
@@ -118,20 +118,21 @@ class prompt(object):
                         self.user_input = ""
                         print '\033[0m'
                         print_loc(' '*80, self.y+5, self.x+2)
-                elif ch == '\x7f':              # backspace
+                elif ch == '\x7f':                      # backspace
                         if self.user_input == "":
                                 return
                         self.user_input = self.user_input[:-1]
-                elif ch == ' ':                 # space
+                elif ch == ' ':                         # space
                         if self.user_input == "":
                                 return
                         self.user_input += ' '
-                elif len(self.user_input) >= 80:           # too long
+                elif len(self.user_input) >= 80:        # too long
                         return
-                else:                           # all else
+                else:                                   # all else
                         self.user_input += ch
                 # Highlight valid user input
                 if self.user_input.lower() in self.links:
+                        print self.user_input.lower()
                         print '\033[0m\033[96m\033[4m'
                 elif command_list.match(self.user_input):
                         print '\033[0m\033[1m\033[92m'
@@ -139,6 +140,7 @@ class prompt(object):
                         print '\033[0m'
                 # Display new user input line
                 print_loc(self.user_input+'\033[0m\033[1m < ', self.y + 5, self.x)
+
         def display(self):
                 # Prompt box
                 print '\033[4m'
@@ -173,6 +175,8 @@ class prompt(object):
                 print_loc('save and quit', 12, 48)
                 print_loc('save to filename and quit', 13, 48)
 
-                print_loc('Press a key to start', self.y+2, self.x+15)
+        def pause(self):
+                print_loc('Press a key to start', self.y+2, self.x+30)
                 getch()
-                print_loc('                    ', self.y+2, self.x+15)
+                print_loc('                    ', self.y+2, self.x+30)
+                self.prompt_time = time()

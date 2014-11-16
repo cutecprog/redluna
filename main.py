@@ -15,8 +15,9 @@ wasn't as fair and she wasn't nearly as inquisitive of her elder folk. [She died
 def main():
         global story
         init()
+        print story.links
         story.display()
-        story.prompt_time = time()
+        story.pause()
         loop_process.start()
         while True:
                 story.onKeyPress()
