@@ -115,7 +115,7 @@ class prompt(object):
                         elif ch == 'C':                  # right arrow
                                 pass
                         elif ch == 'D':                  # left arrow
-                                pass
+                                return self.reset(self.text)
                 elif ch == '\r':                          # return
                         if self.user_input == "":
                                 return
@@ -131,6 +131,7 @@ class prompt(object):
                         self.user_input = ""
                         print '\033[0m'
                         print_loc(' '*80, self.y+5, self.x+2)
+                        print_loc(str(self.head), self.y+5, self.x+10)
                 elif ch == '\x7f':                      # backspace
                         if self.user_input == "":
                                 return
@@ -155,22 +156,23 @@ class prompt(object):
 
         def display(self):
                 # Prompt box
+                print '\033[0m'
                 print '\033[4m'
                 print '\033[1m'
                 print_loc(' '*82, self.y-1, self.x-1)
                 print_loc('Old man', self.y-1, self.x)
                 print '\033[0m'
                 print '\033[1m'
-                print_loc('|',  self.y, self.x-2)
-                print_loc('|',  self.y, self.x+81)
-                print_loc('|',  self.y+1, self.x-2)
-                print_loc('|',  self.y+1, self.x+81)
-                print_loc('|',  self.y+2, self.x-2)
-                print_loc('|',  self.y+2, self.x+81)
-                print_loc('|',  self.y+3, self.x-2)
-                print_loc('|',  self.y+3, self.x+81)
-                print_loc('|',  self.y+4, self.x-2)
-                print_loc('|',  self.y+4, self.x+81)
+                print_loc('|'+' '*81,  self.y,   self.x-2)
+                print_loc('|',         self.y,   self.x+81)
+                print_loc('|'+' '*81,  self.y+1, self.x-2)
+                print_loc('|',         self.y+1, self.x+81)
+                print_loc('|'+' '*81,  self.y+2, self.x-2)
+                print_loc('|',         self.y+2, self.x+81)
+                print_loc('|'+' '*81,  self.y+3, self.x-2)
+                print_loc('|',         self.y+3, self.x+81)
+                print_loc('|'+' '*81,  self.y+4, self.x-2)
+                print_loc('|',         self.y+4, self.x+81)
                 print '\033[4m'
                 print_loc(' '*82, self.y+4, self.x-1)
                 print '\033[0m'
@@ -192,3 +194,32 @@ class prompt(object):
                 getch()
                 print_loc('                    ', self.y+2, self.x+30)
                 self.prompt_time = time()
+
+        def reset(self, text):
+                self.text = text
+                self.length = len(self.text)
+                index = 0
+                links = ""
+                for ch in self.text:
+                        if ch == '[':
+                                links += "(^"
+                        elif ch == ']':
+                                links += ")\s*$|"
+                                index += 1
+                        elif links[-1:] != '|' and links != "":
+                                links += ch
+                self.links = compile(links[:-1].lower())
+                self.lines = len(self.text.split('\n'))
+                self.head       = 0
+                self.head_x     = 0
+                self.head_y     = 0
+                self.tail       = 0
+                self.tail_x     = 0
+                self.tail_y     = 0
+                self.text_color = '\033[0m'
+                self.user_input = ""
+                self.prompt_time = time()
+                self.head_start_time = 0
+                self.tail_start_time = 0
+                self.display()
+                return self
