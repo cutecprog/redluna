@@ -8,8 +8,10 @@ def print_loc(text, y, x):
         print("\033[%s;%sH" % (y,x) + text)
 
 class prompt(object):
-        def __init__(self, text, start_head = 0, start_tail = 5):
+        def __init__(self, y, x, text, start_head = 0, start_tail = 5):
                 self.prompt_time = time()
+                self.head_start_time = 0
+                self.tail_start_time = 0
                 self.text = text
                 self.length = len(text)
                 index = 0
@@ -22,6 +24,8 @@ class prompt(object):
                         elif len(self.links) > index:
                                 self.links[index] += ch
                 self.lines = len(self.text.split('\n'))
+                self.y          = y
+                self.x          = x
                 self.head       = 0
                 self.head_x     = 0
                 self.head_y     = 0
@@ -30,9 +34,10 @@ class prompt(object):
                 self.tail_y     = 0
                 self.text_color = '\033[0m'
 
-        def head_pass(self, y, x):
+        def head_pass(self):
+                self.head_start_time = time()
                 if self.head >= self.length:
-                        pass
+                        return
                 elif self.text[self.head] == ' ' and                           \
                                                 self.text_color == "\033[0m":
                         self.head += 1
@@ -51,21 +56,23 @@ class prompt(object):
                         self.head += 1
                 else:
                         print_loc(self.text_color + self.text[self.head],      \
-                                                y + self.head_y,               \
-                                                x + self.head_x,)
+                                                self.y + self.head_y,          \
+                                                self.x + self.head_x,)
                         self.head += 1
                         self.head_x += 1
-                        return True
-                return False
+                        return
+                self.head_pass()
 
-        def head_tail(self, y, x):
-                if self.tail < 80*self.lines:
+        def tail_pass(self):
+                self.tail_start_time
+                if self.tail > 80*self.lines:
                         pass
                 elif self.tail_x >= 80:
-                        tail += 1
-                        tail_x = 0
-                        tail_y += 1
+                        self.tail += 1
+                        self.tail_x = 0
+                        self.tail_y += 1
                 else:
-                        print_loc("\033[0m ", 60 + tail_x, 20 + tail_y)
-                        tail += 1
-                        tail_x += 1
+                        print_loc("\033[0m ", self.y + self.tail_y, self.x + self.tail_x)
+                        print_loc(str(time()), 1,1)
+                        self.tail += 1
+                        self.tail_x += 1
