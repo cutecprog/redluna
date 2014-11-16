@@ -4,7 +4,7 @@
 
 from lib import prompt
 import threading
-from time import time
+from time import time, sleep
 from atexit import register  # For clean up function
 from os import system, popen
 
@@ -39,8 +39,8 @@ def loop(story):
 @register
 def goodbye():
         system('setterm -cursor on')
-        print '\033[0m'
         system('clear')
+        print '\033[0m'
 
 if __name__ == "__main__":
         from sys import argv

@@ -132,7 +132,9 @@ class prompt(object):
                         if not link:
                                 pass
                         else:
-                                self.reset(link.group(0))
+                                filename = 'data/'+''.join(link.group(0).split(' '))
+                                with open(filename, 'r') as f:
+                                        self.reset(f.read())
                                                 
                         self.user_input = ""
                         print '\033[0m'
