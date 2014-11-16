@@ -16,19 +16,11 @@ wasn't as fair and she wasn't nearly as inquisitive of her elder folk. [She died
         #print story.links
         story.display()
         story.pause()
-        t = threading.Thread(target=story.onKeyPress)
+        t = threading.Thread(target=loop, args=[story])
         t.daemon = True
         t.start()
         while True:
-                if time()-story.head_start_time > .1:
-                        story.head_pass()
-                if time() - story.prompt_time > 5.0 and                        \
-                                        time()-story.tail_start_time > .09:
-                        story.tail_pass()
-                if not t.isAlive():
-                        t = threading.Thread(target=story.onKeyPress)
-                        t.daemon = True
-                        t.start()
+                story.onKeyPress()
 
 def init():
         print '\033[0m'

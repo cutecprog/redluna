@@ -115,7 +115,7 @@ class prompt(object):
                         elif ch == 'C':                  # right arrow
                                 pass
                         elif ch == 'D':                  # left arrow
-                                return self.reset(self.text)
+                                pass
                 elif ch == '\r':                          # return
                         if self.user_input == "":
                                 return
