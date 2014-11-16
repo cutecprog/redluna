@@ -25,7 +25,7 @@ def main():
 def init():
         print '\033[0m'
         system('setterm -cursor off')
-        #system('clear')
+        system('clear')
 
 def loop():
         global story
@@ -40,9 +40,9 @@ loop_process = multiprocessing.Process(name='loop', target=loop)
 # Exit code
 @register
 def goodbye():
-        print '\033[0m'
         system('setterm -cursor on')
         loop_process.terminate()
+        print '\033[0m'
         system('clear')
 
 if __name__ == "__main__":
