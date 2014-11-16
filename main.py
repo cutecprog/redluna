@@ -27,8 +27,8 @@ wasn't as fair and she wasn't nearly as inquisitive of her elder folk. [She died
         while True:
                 if time()-story.head_start_time > .1:
                         story.head_pass()
-                if time() - story.prompt_time > 5 and                        \
-                                        time()-story.head_start_time > .09:
+                if time() - story.prompt_time > 5.0 and                        \
+                                        time()-story.tail_start_time > .09:
                         story.tail_pass()
         # end game
 

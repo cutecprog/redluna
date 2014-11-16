@@ -64,7 +64,7 @@ class prompt(object):
                 self.head_pass()
 
         def tail_pass(self):
-                self.tail_start_time
+                self.tail_start_time = time()
                 if self.tail > 80*self.lines:
                         pass
                 elif self.tail_x >= 80:
@@ -73,6 +73,5 @@ class prompt(object):
                         self.tail_y += 1
                 else:
                         print_loc("\033[0m ", self.y + self.tail_y, self.x + self.tail_x)
-                        print_loc(str(time()), 1,1)
                         self.tail += 1
                         self.tail_x += 1
