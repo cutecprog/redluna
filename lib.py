@@ -55,8 +55,11 @@ class prompt(object):
                 self.prompt_time = time()
                 self.head_start_time = 0
                 self.tail_start_time = 0
+                self.locked = False
 
         def head_pass(self):
+                if self.locked:
+                        return
                 self.head_start_time = time()
                 if self.head >= self.length:
                         return
@@ -86,6 +89,8 @@ class prompt(object):
                 self.head_pass()
 
         def tail_pass(self):
+                if self.locked:
+                        return
                 self.tail_start_time = time()
                 if self.tail > 80*self.lines:
                         pass
@@ -103,6 +108,7 @@ class prompt(object):
 
                 """
                 ch = getch()
+                self.locked = True
                 if ch == '\x1b':                        # escape
                         ch = getch()
                         if ch != '[':
@@ -118,6 +124,7 @@ class prompt(object):
                                 self.reset(self.text)
                 elif ch == '\r':                          # return
                         if self.user_input == "":
+                                self.locked = False
                                 return
                         command = command_list.match(self.user_input)
                         if not command:
@@ -141,13 +148,16 @@ class prompt(object):
                         print_loc(' '*80, self.y+5, self.x+2)
                 elif ch == '\x7f':                      # backspace
                         if self.user_input == "":
+                                self.locked = False
                                 return
                         self.user_input = self.user_input[:-1]
                 elif ch == ' ':                         # space
                         if self.user_input == "":
+                                self.locked = False
                                 return
                         self.user_input += ' '
                 elif len(self.user_input) >= 80:        # too long
+                        self.locked = False
                         return
                 else:                                   # all else
                         self.user_input += ch
@@ -160,6 +170,7 @@ class prompt(object):
                         print '\033[0m'
                 # Display new user input line
                 print_loc(self.user_input+'\033[0m\033[1m < ', self.y + 5, self.x)
+                self.locked = False
 
         def display(self):
                 # Prompt box
@@ -186,15 +197,18 @@ class prompt(object):
                 print '\033[1m'
                 print_loc('>  <', self.y+5, self.x-2)
                 print '\033[0m'
-                print_loc('\033[1mCommands:\033[0m', 10, 20)
+                print_loc('\033[1mCommands:\033[0m',   2, 2)
                 print '\033[0m\033[1m\033[92m'
-                print_loc('forsake game stint', 11, 20)
-                print_loc('spare', 12, 20)
-                print_loc('spare as [filename]', 13, 20)
+                print_loc('forsake game stint',        3, 2)
+                print_loc('spare',                     4, 2)
+                print_loc('spare as [filename]',       5, 2)
+                print '\033[0m\033[96m\033[4m'
+                print_loc('link',                      6, 2)
                 print '\033[0m'
-                print_loc('quit without saving', 11, 48)
-                print_loc('save and quit', 12, 48)
-                print_loc('save to filename and quit', 13, 48)
+                print_loc('quit without saving',       3, 28)
+                print_loc('save and quit',             4, 28)
+                print_loc('save to filename and quit', 5, 28)
+                print_loc('inquire about link',        6, 28)
 
         def pause(self):
                 print_loc('Press a key to start', self.y+2, self.x+30)
@@ -203,6 +217,7 @@ class prompt(object):
                 self.prompt_time = time()
 
         def reset(self, text):
+                self.locked = True
                 self.text = text
                 self.length = len(self.text)
                 index = 0
@@ -229,4 +244,5 @@ class prompt(object):
                 self.head_start_time = 0
                 self.tail_start_time = 0
                 self.display()
-                return self
+                self.locked = False
+                return

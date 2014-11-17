@@ -39,8 +39,8 @@ def loop(story):
 @register
 def goodbye():
         system('setterm -cursor on')
-        system('clear')
         print '\033[0m'
+        system('clear')
 
 if __name__ == "__main__":
         from sys import argv
