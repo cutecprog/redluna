@@ -7,6 +7,13 @@ import threading
 from time import time, sleep
 from atexit import register  # For clean up function
 from os import system, popen
+from tty import setraw
+from termios import tcsetattr, tcgetattr, TCSADRAIN
+from sys import stdin
+
+# Globals
+fd = stdin.fileno()
+old_settings = tcgetattr(fd)
 
 def main():
         story = None
@@ -25,6 +32,7 @@ def main():
 def init():
         print '\033[0m'
         system('setterm -cursor off')
+        setraw(fd)
         system('clear')
 
 def loop(story):
@@ -40,6 +48,7 @@ def loop(story):
 def goodbye():
         system('setterm -cursor on')
         print '\033[0m'
+        tcsetattr(fd, TCSADRAIN, old_settings)
         system('clear')
 
 if __name__ == "__main__":

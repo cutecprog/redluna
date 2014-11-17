@@ -4,22 +4,12 @@
 
 from time import time
 from re import compile, match
+import sys
 
 command_list = compile('(^forsake game stint)\s*$|(^spare)\s*$|(^spare as )(\w+)\s*$')
 
 def print_loc(text, y, x):
         print("\033[%s;%sH" % (y,x) + text)
-
-def getch():
-        import tty, termios, sys
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
-        try:
-                tty.setraw(sys.stdin.fileno())
-                ch = sys.stdin.read(1)
-        finally:
-                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
 
 def save(filename = str(int(time()))):
         with open(filename, 'w') as f:
@@ -107,13 +97,13 @@ class prompt(object):
                 """ Get a character and change user input line accordingly.
 
                 """
-                ch = getch()
+                ch = sys.stdin.read(1)
                 if ch == '\x1b':                        # escape
                         self.locked = True
-                        ch = getch()
+                        ch = sys.stdin.read(1)
                         if ch != '[':
                                 exit()
-                        ch = getch()
+                        ch = sys.stdin.read(1)
                         if ch == 'A':                    # up arrow
                                 pass
                         elif ch == 'B':                  # down arrow
@@ -212,7 +202,7 @@ class prompt(object):
 
         def pause(self):
                 print_loc('Press a key to start', self.y+2, self.x+30)
-                getch()
+                ch = sys.stdin.read(1)
                 print_loc('                    ', self.y+2, self.x+30)
                 self.prompt_time = time()
 
