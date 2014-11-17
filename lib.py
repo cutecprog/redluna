@@ -108,8 +108,8 @@ class prompt(object):
 
                 """
                 ch = getch()
-                self.locked = True
                 if ch == '\x1b':                        # escape
+                        self.locked = True
                         ch = getch()
                         if ch != '[':
                                 exit()
@@ -122,9 +122,9 @@ class prompt(object):
                                 pass
                         elif ch == 'D':                  # left arrow
                                 self.reset(self.text)
+                        self.locked = False
                 elif ch == '\r':                          # return
                         if self.user_input == "":
-                                self.locked = False
                                 return
                         command = command_list.match(self.user_input)
                         if not command:
@@ -139,28 +139,28 @@ class prompt(object):
                         if not link:
                                 pass
                         else:
-                                filename = 'data/'+''.join(link.group(0).split(' '))
+                                filename = 'data/'+'_'.join(link.group(0).split(' '))
                                 with open(filename, 'r') as f:
                                         self.reset(f.read())
                                                 
                         self.user_input = ""
+                        self.locked = True
                         print '\033[0m'
                         print_loc(' '*80, self.y+5, self.x+2)
+                        self.locked = False
                 elif ch == '\x7f':                      # backspace
                         if self.user_input == "":
-                                self.locked = False
                                 return
                         self.user_input = self.user_input[:-1]
                 elif ch == ' ':                         # space
                         if self.user_input == "":
-                                self.locked = False
                                 return
                         self.user_input += ' '
                 elif len(self.user_input) >= 80:        # too long
-                        self.locked = False
                         return
                 else:                                   # all else
                         self.user_input += ch
+                self.locked = True
                 # Highlight valid user input
                 if self.links.match(self.user_input.lower()):
                         print '\033[0m\033[96m\033[4m'
