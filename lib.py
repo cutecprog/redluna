@@ -2,7 +2,7 @@
 # Support library for the game
 #-------------------------------------------------------------------------------
 
-from time import time, sleep
+from time import time
 from re import compile, match
 import sys
 
@@ -101,14 +101,16 @@ class prompt(object):
                 if self.locked:
                         return
                 self.tail_start_time = time()
-                if self.tail > 80*self.lines:
+                if self.tail_y > self.lines:
                         pass
                 elif self.tail_x >= 80:
                         self.tail += 1
                         self.tail_x = 0
                         self.tail_y += 1
                 else:
-                        print_loc("\033[0m ", self.y + self.tail_y, self.x + self.tail_x)
+                        whitespace = (' ' * 80 + '\n') * self.tail_y + ' ' * (self.tail_x%80)
+                        print "\033[0m"
+                        print_loc(whitespace, self.y, self.x)
                         self.tail += 1
                         self.tail_x += 1
 
@@ -259,6 +261,5 @@ class prompt(object):
                 self.head_start_time = 0
                 self.tail_start_time = 0
                 self.display()
-                sleep(.1)
                 self.locked = False
                 return
