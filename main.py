@@ -37,6 +37,7 @@ def init():
 
 def loop(story):
         while True:
+                #story.debug()
                 if time()-story.head_start_time > .1:
                         story.head_pass()
                 if time() - story.prompt_time > 5.0 and                        \

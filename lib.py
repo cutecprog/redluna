@@ -2,7 +2,7 @@
 # Support library for the game
 #-------------------------------------------------------------------------------
 
-from time import time
+from time import time, sleep
 from re import compile, match
 import sys
 
@@ -45,6 +45,25 @@ class prompt(object):
                 self.prompt_time = time()
                 self.head_start_time = 0
                 self.tail_start_time = 0
+                self.locked = False
+
+        def debug(self):
+                if self.locked:
+                        return
+                self.locked = True
+                print "\033[0m"
+                print_loc("head:",          2, 62)
+                print_loc("x:",             3, 65)
+                print_loc("y:",             4, 65)
+                print_loc("tail:",          5, 62)
+                print_loc("x:",             6, 65)
+                print_loc("y:",             7, 65)
+                print_loc(str(self.head)+ "  ",   2, 86)
+                print_loc(str(self.head_x)+ "  ", 3, 86)
+                print_loc(str(self.head_y)+ "  ", 4, 86)
+                print_loc(str(self.tail)+ "  ",   5, 86)
+                print_loc(str(self.tail_x)+ "  ", 6, 86)
+                print_loc(str(self.tail_y)+ "  ", 7, 86)
                 self.locked = False
 
         def head_pass(self):
@@ -234,5 +253,6 @@ class prompt(object):
                 self.head_start_time = 0
                 self.tail_start_time = 0
                 self.display()
+                sleep(.1)
                 self.locked = False
                 return
