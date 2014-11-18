@@ -130,7 +130,7 @@ class prompt(object):
                         elif ch == 'C':                  # right arrow
                                 pass
                         elif ch == 'D':                  # left arrow
-                                self.reset(self.text)
+                                pass
                         self.locked = False
                 elif ch == '\r':                          # return
                         if self.user_input == "":
@@ -226,7 +226,14 @@ class prompt(object):
                 self.locked = True
                 filename = 'data/'+'_'.join(link.split(' '))
                 with open(filename, 'r') as f:
-                        self.text = f.read()
+                        super_text = ""
+                        while True:
+                                line = f.readline()
+                                if line[0] != '!':
+                                        self.text = super_text + line
+                                        break
+                                super_text = line
+                        self.text += f.read()
                 self.length = len(self.text)
                 index = 0
                 links = ""
