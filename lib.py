@@ -20,17 +20,8 @@ class prompt(object):
         def __init__(self, y, x, text, start_head = 0, start_tail = 5):
                 self.text = text
                 self.length = len(self.text)
-                index = 0
-                links = ""
-                for ch in self.text:
-                        if ch == '[':
-                                links += "(^"
-                        elif ch == ']':
-                                links += ")\s*$|"
-                                index += 1
-                        elif links[-1:] != '|' and links != "":
-                                links += ch
-                self.links = compile(links[:-1].lower())
+                self.links = ""
+                self._generate_links()
                 self.lines = len(self.text.split('\n'))
                 self.y          = y
                 self.x          = x
@@ -239,17 +230,7 @@ class prompt(object):
                                 super_text =  + ' '    # add space
                         self.text += f.read()
                 self.length = len(self.text)
-                index = 0
-                links = ""
-                for ch in self.text:
-                        if ch == '[':
-                                links += "(^"
-                        elif ch == ']':
-                                links += ")\s*$|"
-                                index += 1
-                        elif links[-1:] != '|' and links != "":
-                                links += ch
-                self.links = compile(links[:-1].lower())
+                self._generate_links()
                 self.lines = len(self.text.split('\n'))
                 self.head       = 0
                 self.head_x     = 0
@@ -265,3 +246,19 @@ class prompt(object):
                 self.display()
                 self.locked = False
                 return
+
+        def _generate_links(self):
+                """ Find links and make them a regular expression.
+
+                """
+                index = 0
+                links = ""
+                for ch in self.text:
+                        if ch == '[':
+                                links += "(^"
+                        elif ch == ']':
+                                links += ")\s*$|"
+                                index += 1
+                        elif links[-1:] != '|' and links != "":
+                                links += ch
+                self.links = compile(links[:-1].lower())
