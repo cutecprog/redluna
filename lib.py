@@ -193,6 +193,10 @@ class prompt(object):
         def pause(self):
                 self.locked = True
                 pause_start = time()
+                print_loc(' ' * 80,               self.y,   self.x)
+                print_loc(' ' * 80,               self.y+1, self.x)
+                print_loc(' ' * 80,               self.y+2, self.x)
+                print_loc(' ' * 80,               self.y+3, self.x)
                 print_loc('Press a key to start', self.y+2, self.x+30)
                 ch = sys.stdin.read(1)
                 print_loc('                    ', self.y+2, self.x+30)
