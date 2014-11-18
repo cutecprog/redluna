@@ -148,10 +148,7 @@ class prompt(object):
                         if not link:
                                 pass
                         else:
-                                filename = 'data/'+'_'.join(link.group(0).split(' '))
-                                with open(filename, 'r') as f:
-                                        self.reset(f.read())
-                                                
+                                self.reset(link.group(0))
                         self.user_input = ""
                         self.locked = True
                         print '\033[0m'
@@ -225,9 +222,11 @@ class prompt(object):
                 print_loc('                    ', self.y+2, self.x+30)
                 self.prompt_time = time()
 
-        def reset(self, text):
+        def reset(self, link):
                 self.locked = True
-                self.text = text
+                filename = 'data/'+'_'.join(link.split(' '))
+                with open(filename, 'r') as f:
+                        self.text = f.read()
                 self.length = len(self.text)
                 index = 0
                 links = ""
