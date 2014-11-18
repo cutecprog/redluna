@@ -94,14 +94,14 @@ class prompt(object):
                 self.tail_start_time = time()
                 if self.tail_y > self.lines:
                         pass
-                elif self.tail_x >= 80:
+                elif self.tail_x > 80:
                         self.tail += 1
                         self.tail_x = 0
                         self.tail_y += 1
                 else:
-                        whitespace = (' ' * 80 + '\n') * self.tail_y + ' ' * (self.tail_x%80)
+                        whitespace = ' ' * (self.tail_x)
                         print "\033[0m"
-                        print_loc(whitespace, self.y, self.x)
+                        print_loc(whitespace, self.y+self.tail_y, self.x)
                         self.tail += 1
                         self.tail_x += 1
 
