@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------------------
 
 from time import time
-from re import compile, match
+from re import compile, match, sub
 import sys
 
 command_list = compile('(^forsake game stint)\s*$|(^spare)\s*$|(^spare as )(\w+)\s*$')
@@ -123,7 +123,7 @@ class prompt(object):
                         elif ch == 'C':                  # right arrow
                                 pass
                         elif ch == 'D':                  # left arrow
-                                pass
+                                self.pause()
                         self.locked = False
                 elif ch == '\r':                          # return
                         if self.user_input == "":
@@ -193,6 +193,7 @@ class prompt(object):
         def pause(self):
                 self.locked = True
                 pause_start = time()
+                print '\033[0m'
                 print_loc(' ' * 80,               self.y,   self.x)
                 print_loc(' ' * 80,               self.y+1, self.x)
                 print_loc(' ' * 80,               self.y+2, self.x)
@@ -200,6 +201,14 @@ class prompt(object):
                 print_loc('Press a key to start', self.y+2, self.x+30)
                 ch = sys.stdin.read(1)
                 print_loc('                    ', self.y+2, self.x+30)
+                tmp = prompt(self.y, self.x, self.text)
+                tmp.head = self.tail
+                tmp.head_x = self.tail_x
+                tmp.head_y = self.tail_y
+                tmp.locked = False
+                while tmp.head < self.head:
+                        tmp.head_pass()
+                #print_loc(self.text[self.tail: self.head+1], self.y, self.x)
                 self.prompt_time += (time() - pause_start)
                 self.locked = False
 
