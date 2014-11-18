@@ -234,7 +234,9 @@ class prompt(object):
                                 if line[0] != '!':
                                         self.text = super_text + line
                                         break
-                                super_text = line
+                                line = line[1:-1]      # remove ! and \n
+                                line = line.strip(' ')
+                                super_text =  + ' '    # add space
                         self.text += f.read()
                 self.length = len(self.text)
                 index = 0
