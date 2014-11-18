@@ -191,10 +191,13 @@ class prompt(object):
                 print_loc('inquire about link',        6, 28)
 
         def pause(self):
+                self.locked = True
+                pause_start = time()
                 print_loc('Press a key to start', self.y+2, self.x+30)
                 ch = sys.stdin.read(1)
                 print_loc('                    ', self.y+2, self.x+30)
-                self.prompt_time = time()
+                self.prompt_time += (time() - pause_start)
+                self.locked = False
 
         def reset(self, link):
                 self.locked = True
