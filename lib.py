@@ -172,26 +172,7 @@ class prompt(object):
                 self.locked = False
 
         def display(self):
-                # Prompt box
-                print '\033[0m'
-                print '\033[4m'
-                print '\033[1m'
-                print_loc(' '*82, self.y-1, self.x-1)
-                print_loc('Old man', self.y-1, self.x)
-                print '\033[0m'
-                print '\033[1m'
-                print_loc('|'+' '*81,  self.y,   self.x-2)
-                print_loc('|',         self.y,   self.x+81)
-                print_loc('|'+' '*81,  self.y+1, self.x-2)
-                print_loc('|',         self.y+1, self.x+81)
-                print_loc('|'+' '*81,  self.y+2, self.x-2)
-                print_loc('|',         self.y+2, self.x+81)
-                print_loc('|'+' '*81,  self.y+3, self.x-2)
-                print_loc('|',         self.y+3, self.x+81)
-                print_loc('|'+' '*81,  self.y+4, self.x-2)
-                print_loc('|',         self.y+4, self.x+81)
-                print '\033[4m'
-                print_loc(' '*82, self.y+4, self.x-1)
+                self._print_box()
                 print '\033[0m'
                 print '\033[1m'
                 print_loc('>  <', self.y+5, self.x-2)
@@ -262,3 +243,25 @@ class prompt(object):
                         elif links[-1:] != '|' and links != "":
                                 links += ch
                 self.links = compile(links[:-1].lower())
+
+        def _print_box(self):
+                # Prompt box
+                print '\033[0m'
+                print '\033[4m'
+                print '\033[1m'
+                print_loc(' '*82, self.y-1, self.x-1)
+                print_loc('Old man', self.y-1, self.x)
+                print '\033[0m'
+                print '\033[1m'
+                print_loc('|'+' '*81,  self.y,   self.x-2)
+                print_loc('|',         self.y,   self.x+81)
+                print_loc('|'+' '*81,  self.y+1, self.x-2)
+                print_loc('|',         self.y+1, self.x+81)
+                print_loc('|'+' '*81,  self.y+2, self.x-2)
+                print_loc('|',         self.y+2, self.x+81)
+                print_loc('|'+' '*81,  self.y+3, self.x-2)
+                print_loc('|',         self.y+3, self.x+81)
+                print_loc('|'+' '*81,  self.y+4, self.x-2)
+                print_loc('|',         self.y+4, self.x+81)
+                print '\033[4m'
+                print_loc(' '*82, self.y+4, self.x-1)
