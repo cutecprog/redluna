@@ -36,12 +36,12 @@ class prompt(object):
                 self.prompt_time = time()
                 self.head_start_time = 0
                 self.tail_start_time = 0
-                self.locked = False
+                self.locked = 0
 
         def debug(self):
                 if self.locked:
                         return
-                self.locked = True
+                self.locked += 1
                 print "\033[0m"
                 print_loc("head:",          2, 62)
                 print_loc("x:",             3, 65)
@@ -55,7 +55,7 @@ class prompt(object):
                 print_loc(str(self.tail)+ "  ",   5, 86)
                 print_loc(str(self.tail_x)+ "  ", 6, 86)
                 print_loc(str(self.tail_y)+ "  ", 7, 86)
-                self.locked = False
+                self.locked -= 1
 
         def head_pass(self):
                 if self.locked:
@@ -111,7 +111,7 @@ class prompt(object):
                 """
                 ch = sys.stdin.read(1)
                 if ch == '\x1b':                        # escape
-                        self.locked = True
+                        self.locked += 1
                         ch = sys.stdin.read(1)
                         if ch != '[':
                                 exit()
@@ -124,7 +124,7 @@ class prompt(object):
                                 pass
                         elif ch == 'D':                  # left arrow
                                 self.pause()
-                        self.locked = False
+                        self.locked -= 1
                 elif ch == '\r':                          # return
                         if self.user_input == "":
                                 return
@@ -143,10 +143,10 @@ class prompt(object):
                         else:
                                 self.reset(link.group(0))
                         self.user_input = ""
-                        self.locked = True
+                        self.locked += 1
                         print '\033[0m'
                         print_loc(' '*80, self.y+5, self.x+2)
-                        self.locked = False
+                        self.locked -= 1
                 elif ch == '\x7f':                      # backspace
                         if self.user_input == "":
                                 return
@@ -159,7 +159,7 @@ class prompt(object):
                         return
                 else:                                   # all else
                         self.user_input += ch
-                self.locked = True
+                self.locked += 1
                 # Highlight valid user input
                 if self.links.match(self.user_input.lower()):
                         print '\033[0m\033[96m\033[4m'
@@ -169,7 +169,7 @@ class prompt(object):
                         print '\033[0m'
                 # Display new user input line
                 print_loc(self.user_input+'\033[0m\033[1m < ', self.y + 5, self.x)
-                self.locked = False
+                self.locked -= 1
 
         def display(self):
                 self._print_box()
@@ -191,7 +191,7 @@ class prompt(object):
                 print_loc('inquire about link',        6, 28)
 
         def pause(self):
-                self.locked = True
+                self.locked += 1
                 pause_start = time()
                 print '\033[0m'
                 print_loc(' ' * 80,               self.y,   self.x)
@@ -201,19 +201,16 @@ class prompt(object):
                 print_loc('Press a key to start', self.y+2, self.x+30)
                 ch = sys.stdin.read(1)
                 print_loc('                    ', self.y+2, self.x+30)
-                tmp = prompt(self.y, self.x, self.text)
-                tmp.head = self.tail
-                tmp.head_x = self.tail_x
-                tmp.head_y = self.tail_y
-                tmp.locked = False
-                while tmp.head < self.head:
-                        tmp.head_pass()
-                #print_loc(self.text[self.tail: self.head+1], self.y, self.x)
+                lines = self.text[self.tail:self.head].split('\n')
+                index = 0
+                for line in lines:
+                        print_loc(line, self.y + index, self.x)
+                        index += 1
                 self.prompt_time += (time() - pause_start)
-                self.locked = False
+                self.locked -= 1
 
         def reset(self, link):
-                self.locked = True
+                self.locked += 1
                 filename = 'data/'+'_'.join(link.split(' '))
                 with open(filename, 'r') as f:
                         super_text = ""
@@ -241,7 +238,7 @@ class prompt(object):
                 self.head_start_time = 0
                 self.tail_start_time = 0
                 self.display()
-                self.locked = False
+                self.locked -= 1
                 return
 
         def _generate_links(self):
