@@ -191,21 +191,28 @@ class prompt(object):
                 print_loc('inquire about link',        6, 28)
 
         def pause(self):
+                #if self.locked:
+                #        return
                 self.locked += 1
                 pause_start = time()
                 print '\033[0m'
-                print_loc(' ' * 80,               self.y,   self.x)
-                print_loc(' ' * 80,               self.y+1, self.x)
-                print_loc(' ' * 80,               self.y+2, self.x)
-                print_loc(' ' * 80,               self.y+3, self.x)
+                print_loc(' ' * 82,               self.y,   self.x-1)
+                print_loc(' ' * 82,               self.y+1, self.x-1)
+                print_loc(' ' * 82,               self.y+2, self.x-1)
+                print_loc(' ' * 82,               self.y+3, self.x-1)
                 print_loc('Press a key to start', self.y+2, self.x+30)
+                print '\033[1m'
+                print_loc('PAUSE', self.y+1, self.x+37)
+                print '\033[0m'
                 ch = sys.stdin.read(1)
+                print_loc('     ', self.y+1, self.x+37)
                 print_loc('                    ', self.y+2, self.x+30)
-                lines = self.text[self.tail:self.head].split('\n')
-                index = 0
-                for line in lines:
-                        print_loc(line, self.y + index, self.x)
-                        index += 1
+                tmp = prompt(self.y, self.x, self.text)
+                tmp.head = self.tail
+                tmp.head_x = self.tail_x
+                tmp.head_y = self.tail_y
+                while tmp.head < self.head:
+                        tmp.head_pass()
                 self.prompt_time += (time() - pause_start)
                 self.locked -= 1
 
