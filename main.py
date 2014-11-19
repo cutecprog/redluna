@@ -12,14 +12,16 @@ from termios import tcsetattr, tcgetattr, TCSADRAIN
 from sys import stdin
 
 # Globals
-fd = stdin.fileno()
-old_settings = tcgetattr(fd)
+fd = None
+old_settings = None
 
 def main():
         story = None
         rows, cols = popen('stty size','r').read().split()
         rows = int(rows)
         cols = int(cols)
+        if rows < 16 or cols < 80:
+                return
         y = (rows - 7)/2
         if y < 8:
                 y = 8
@@ -37,8 +39,12 @@ def main():
                 story.onKeyPress()
 
 def init():
+        global fd
+        global old_settings
         print '\033[0m'
         system('setterm -cursor off')
+        fd = stdin.fileno()
+        old_settings = tcgetattr(fd)
         setraw(fd)
         system('clear')
 
@@ -56,7 +62,8 @@ def loop(story):
 def goodbye():
         system('setterm -cursor on')
         print '\033[0m'
-        tcsetattr(fd, TCSADRAIN, old_settings)
+        if fd or old_settings:
+                tcsetattr(fd, TCSADRAIN, old_settings)
         system('clear')
 
 if __name__ == "__main__":
