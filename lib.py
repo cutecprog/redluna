@@ -73,9 +73,8 @@ class prompt(object):
                         self.head_y += 1
                         if self.head_y > 3:
                                 self.head_y = 0
-                                #self.tail_y = 1
-                                #self.tail_x = 0
-                                #print_loc(' ' * 80, self.y, self.x)
+                                self.tail_y = -4 # So that (tail_y+1)%4 == 1
+                                print_loc(' ' * 80, self.y, self.x)
                 elif self.text[self.head] == '[':
                         self.text_color = "\033[0m\033[96m\033[4m"
                         print self.text_color
@@ -104,6 +103,8 @@ class prompt(object):
                         self.tail_x = 0
                         self.tail_y = (self.tail_y + 1) % 4
                 elif match('\[|\]', self.text[self.tail]):
+                        self.tail += 1
+                elif self.tail_y < 0:
                         self.tail += 1
                 else:
                         whitespace = ' ' * (self.tail_x+1)
