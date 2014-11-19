@@ -36,6 +36,10 @@ def main():
         #print story.links
         story.display()
         story.pause()
+        if size != popen('stty size','r').read():
+                error_message += "\033[91m\033[1mError:\033[0m screen size changed\n"
+                exit()
+
         t = threading.Thread(target=loop, args=[story])
         t.daemon = True
         t.start()
