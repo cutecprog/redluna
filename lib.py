@@ -8,6 +8,14 @@ import sys
 
 command_list = compile('(^end game stint)\s*$|(^spare)\s*$|(^spare as )(\w+)\s*$')
 
+v_bar = b'\xe2\x94\x82'
+h_bar = b'\xe2\x94\x80'
+bl_corner = b'\xe2\x95\xb0'
+br_corner = b'\xe2\x95\xaf'
+tl_corner = b'\xe2\x95\xad'
+tr_corner = b'\xe2\x95\xae'
+bl_square_corner = b'\xe2\x94\x94'
+
 def print_loc(text, y, x):
         print("\033[%s;%sH" % (y,x) + text)
 
@@ -188,11 +196,12 @@ class prompt(object):
         def pause(self):
                 self.locked += 1
                 pause_start = time()
-                print '\033[0m\033[1m'
-                print_loc('|'+' ' * 82+'|',       self.y,   self.x-2)
-                print_loc('|'+' ' * 82+'|',       self.y+1, self.x-2)
-                print_loc('|'+' ' * 82+'|',       self.y+2, self.x-2)
-                print_loc('|'+' ' * 82+'|',       self.y+3, self.x-2)
+                print '\033[0m'
+                print_loc(v_bar+' ' * 82+v_bar,       self.y,   self.x-2)
+                print_loc(v_bar+' ' * 82+v_bar,       self.y+1, self.x-2)
+                print_loc(v_bar+' ' * 82+v_bar,       self.y+2, self.x-2)
+                print_loc(v_bar+' ' * 82+v_bar,       self.y+3, self.x-2)
+                print '\033[1m'
                 print_loc('PAUSE',                self.y+1, self.x+37)
                 print '\033[0m'
                 print_loc('e - end game stint'+' '*8+'[space] - continue'+' '*8+'s - spare', self.y+2, self.x+8)
@@ -259,21 +268,18 @@ class prompt(object):
         def _print_box(self):
                 # Prompt box
                 print '\033[0m'
-                print '\033[4m'
-                print '\033[1m'
-                print_loc(' '*82, self.y-1, self.x-1)
-                print_loc('Old man', self.y-1, self.x)
+                print_loc(tl_corner+h_bar*9+tr_corner,  self.y-2, self.x-2)
+                print_loc(v_bar,                        self.y-1, self.x-2)
+                print_loc(tr_corner,                    self.y-1, self.x+81)
+                print_loc(bl_square_corner+h_bar*72,    self.y-1, self.x+8)
+                print_loc(bl_corner,                    self.y+4, self.x-2)
+                print_loc(br_corner,                    self.y+4, self.x+81)
+                print_loc(h_bar*82,                     self.y+4, self.x-1)
+                print_loc(v_bar+' ' * 82+v_bar,       self.y,   self.x-2)
+                print_loc(v_bar+' ' * 82+v_bar,       self.y+1, self.x-2)
+                print_loc(v_bar+' ' * 82+v_bar,       self.y+2, self.x-2)
+                print_loc(v_bar+' ' * 82+v_bar,       self.y+3, self.x-2)
                 print '\033[0m'
-                print '\033[1m'
-                print_loc('|'+' '*81,  self.y,   self.x-2)
-                print_loc('|',         self.y,   self.x+81)
-                print_loc('|'+' '*81,  self.y+1, self.x-2)
-                print_loc('|',         self.y+1, self.x+81)
-                print_loc('|'+' '*81,  self.y+2, self.x-2)
-                print_loc('|',         self.y+2, self.x+81)
-                print_loc('|'+' '*81,  self.y+3, self.x-2)
-                print_loc('|',         self.y+3, self.x+81)
-                print_loc('|'+' '*81,  self.y+4, self.x-2)
-                print_loc('|',         self.y+4, self.x+81)
                 print '\033[4m'
-                print_loc(' '*82, self.y+4, self.x-1)
+                print '\033[1m'
+                print_loc('Old man', self.y-1, self.x)
