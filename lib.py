@@ -97,14 +97,16 @@ class prompt(object):
                 if self.locked:
                         return
                 self.tail_start_time = time()
-                if self.tail > self.lines * 80:
+                if self.tail >= self.length:
                         pass
-                elif self.tail_x > 80:
+                elif self.text[self.tail] == '\n':
                         self.tail += 1
                         self.tail_x = 0
                         self.tail_y = (self.tail_y + 1) % 4
+                elif match('\[|\]', self.text[self.tail]):
+                        self.tail += 1
                 else:
-                        whitespace = ' ' * (self.tail_x)
+                        whitespace = ' ' * (self.tail_x+1)
                         print "\033[0m"
                         print_loc(whitespace, self.y+self.tail_y, self.x)
                         self.tail += 1
