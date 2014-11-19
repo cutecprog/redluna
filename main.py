@@ -60,11 +60,13 @@ def loop(story):
 # Exit code
 @register
 def goodbye():
-        system('setterm -cursor on')
-        print '\033[0m'
         if fd or old_settings:
+                system('setterm -cursor on')
+                print '\033[0m'
                 tcsetattr(fd, TCSADRAIN, old_settings)
-        system('clear')
+                system('clear')
+        else:
+                print "\033[91m\033[1mError:\033[0m screen is smaller than 16x80\n"
 
 if __name__ == "__main__":
         from sys import argv
