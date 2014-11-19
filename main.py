@@ -4,7 +4,7 @@
 
 from lib import prompt
 import threading
-from time import time, sleep
+from time import time
 from atexit import register  # For clean up function
 from os import system, popen
 from tty import setraw
@@ -17,8 +17,15 @@ old_settings = tcgetattr(fd)
 
 def main():
         story = None
+        rows, cols = popen('stty size','r').read().split()
+        rows = int(rows)
+        cols = int(cols)
+        y = (rows - 7)/2
+        if y < 8:
+                y = 8
+        x = (cols - 80)/2 + 1
         with open('data/start', 'r') as f:
-                story = prompt(20, 60, f.read())
+                story = prompt(y, x, f.read())
         init()
         #print story.links
         story.display()

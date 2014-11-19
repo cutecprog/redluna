@@ -179,33 +179,46 @@ class prompt(object):
                 self._print_box()
                 print '\033[0m'
                 print '\033[1m'
-                print_loc('>  <', self.y+5, self.x-2)
-                print '\033[0m'
-                print_loc('\033[1mCommands:\033[0m',   2, 2)
+                if self.x >= 3:
+                        print_loc('>  <', self.y+5, self.x-2)
+                else:
+                        print_loc(' <', self.y+5, self.x)
+                print '\033[0m\033[1m'
+                print_loc('Commands:',                 2,  2)
+                print_loc('Key commands:',             2, 60)
                 print '\033[0m\033[1m\033[92m'
-                print_loc('end game stint',            3, 2)
-                print_loc('spare',                     4, 2)
-                print_loc('spare as [filename]',       5, 2)
+                print_loc('end game stint',            3,  2)
+                print_loc('spare',                     4,  2)
+                print_loc('spare as [filename]',       5,  2)
                 print '\033[0m\033[96m\033[4m'
-                print_loc('link',                      6, 2)
+                print_loc('link',                      6,  2)
                 print '\033[0m'
                 print_loc('quit without saving',       3, 28)
                 print_loc('save and quit',             4, 28)
                 print_loc('save to filename and quit', 5, 28)
                 print_loc('inquire about link',        6, 28)
+                print_loc('[ESC] - pause game',        3, 60)
 
         def pause(self):
                 self.locked += 1
                 pause_start = time()
                 print '\033[0m'
-                print_loc(v_bar+' ' * 82+v_bar,       self.y,   self.x-2)
-                print_loc(v_bar+' ' * 82+v_bar,       self.y+1, self.x-2)
-                print_loc(v_bar+' ' * 82+v_bar,       self.y+2, self.x-2)
-                print_loc(v_bar+' ' * 82+v_bar,       self.y+3, self.x-2)
+                if self.x >= 3:
+                        print_loc(v_bar + ' ' * 82 + v_bar, self.y,   self.x-2)
+                        print_loc(v_bar + ' ' * 82 + v_bar, self.y+1, self.x-2)
+                        print_loc(v_bar + ' ' * 82 + v_bar, self.y+2, self.x-2)
+                        print_loc(v_bar + ' ' * 82 + v_bar, self.y+3, self.x-2)
+                else:
+                        print_loc(' ' * (80+self.x-1), self.y,   self.x-1)
+                        print_loc(' ' * (80+self.x-1), self.y+1, self.x-1)
+                        print_loc(' ' * (80+self.x-1), self.y+2, self.x-1)
+                        print_loc(' ' * (80+self.x-1), self.y+3, self.x-1)
                 print '\033[1m'
-                print_loc('PAUSE',                self.y+1, self.x+37)
+                print_loc('PAUSE', self.y+1, self.x+37)
                 print '\033[0m'
-                print_loc('e - end game stint'+' '*8+'[space] - continue'+' '*8+'s - spare', self.y+2, self.x+8)
+                print_loc('e - end game stint' + ' ' * 8 + '[space] - continue'\
+                                               + ' ' * 8 + 's - spare',        \
+                                               self.y+2, self.x+8)
                 while True:
                         ch = sys.stdin.read(1)
                         if ch == '[':
@@ -217,8 +230,8 @@ class prompt(object):
                                 exit()
                         elif ch == ' ':
                                 break
-                print_loc('     ', self.y+1, self.x+37)
-                print_loc(' '*61, self.y+2, self.x+8)
+                print_loc('     ',   self.y+1, self.x+37)
+                print_loc(' ' * 61,  self.y+2, self.x+8)
                 tmp = prompt(self.y, self.x, self.text)
                 tmp.head = self.tail
                 tmp.head_x = self.tail_x
@@ -270,17 +283,18 @@ class prompt(object):
         def _print_box(self):
                 # Prompt box
                 print '\033[0m'
-                print_loc(tl_corner+h_bar*82+tr_corner,  self.y-1, self.x-2)
-                #print_loc(v_bar,                        self.y-1, self.x-2)
-                #print_loc(v_bar,                    self.y-1, self.x+81)
-                #print_loc(bl_square_corner+h_bar*72,    self.y-1, self.x+8)
-                print_loc(bl_corner,                    self.y+4, self.x-2)
-                print_loc(br_corner,                    self.y+4, self.x+81)
-                print_loc(h_bar*82,                     self.y+4, self.x-1)
-                print_loc(v_bar+' ' * 82+v_bar,       self.y,   self.x-2)
-                print_loc(v_bar+' ' * 82+v_bar,       self.y+1, self.x-2)
-                print_loc(v_bar+' ' * 82+v_bar,       self.y+2, self.x-2)
-                print_loc(v_bar+' ' * 82+v_bar,       self.y+3, self.x-2)
-                print '\033[0m'
-                print '\033[1m\033[4m'
-                #print_loc('Old man', self.y-1, self.x)
+                if self.x < 3:
+                        print_loc(h_bar * (80+self.x), self.y-1, 0)
+                        print_loc(' '   * (80+self.x), self.y,   0)
+                        print_loc(' '   * (80+self.x), self.y+1, 0)
+                        print_loc(' '   * (80+self.x), self.y+2, 0)
+                        print_loc(' '   * (80+self.x), self.y+3, 0)
+                        print_loc(h_bar * (80+self.x), self.y+4, 0)
+                else:
+                        print_loc(tl_corner + h_bar * 82 + tr_corner, self.y-1, self.x-2)
+                        print_loc(v_bar     + ' '   * 82 + v_bar,     self.y,   self.x-2)
+                        print_loc(v_bar     + ' '   * 82 + v_bar,     self.y+1, self.x-2)
+                        print_loc(v_bar     + ' '   * 82 + v_bar,     self.y+2, self.x-2)
+                        print_loc(v_bar     + ' '   * 82 + v_bar,     self.y+3, self.x-2)
+                        print_loc(bl_corner + h_bar * 82 + br_corner, self.y+4, self.x-2)
+
