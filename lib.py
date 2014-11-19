@@ -111,20 +111,7 @@ class prompt(object):
                 """
                 ch = sys.stdin.read(1)
                 if ch == '\x1b':                        # escape
-                        self.locked += 1
-                        ch = sys.stdin.read(1)
-                        if ch != '[':
-                                exit()
-                        ch = sys.stdin.read(1)
-                        if ch == 'A':                    # up arrow
-                                pass
-                        elif ch == 'B':                  # down arrow
-                                pass
-                        elif ch == 'C':                  # right arrow
-                                pass
-                        elif ch == 'D':                  # left arrow
-                                self.pause()
-                        self.locked -= 1
+                        self.pause()
                 elif ch == '\r':                          # return
                         if self.user_input == "":
                                 return
@@ -195,16 +182,26 @@ class prompt(object):
                 #        return
                 self.locked += 1
                 pause_start = time()
+                print '\033[0m\033[1m'
+                print_loc('|'+' ' * 82+'|',       self.y,   self.x-2)
+                print_loc('|'+' ' * 82+'|',       self.y+1, self.x-2)
+                print_loc('|'+' ' * 82+'|',       self.y+2, self.x-2)
+                print_loc('|'+' ' * 82+'|',       self.y+3, self.x-2)
+                print_loc('PAUSE',                self.y+1, self.x+37)
                 print '\033[0m'
-                print_loc(' ' * 82,               self.y,   self.x-1)
-                print_loc(' ' * 82,               self.y+1, self.x-1)
-                print_loc(' ' * 82,               self.y+2, self.x-1)
-                print_loc(' ' * 82,               self.y+3, self.x-1)
                 print_loc('Press a key to start', self.y+2, self.x+30)
-                print '\033[1m'
-                print_loc('PAUSE', self.y+1, self.x+37)
-                print '\033[0m'
                 ch = sys.stdin.read(1)
+                if ch == '[':
+                        ch = sys.stdin.read(1)
+                elif ch == 's':
+                        save()
+                elif ch == 'q':
+                        exit()
+                elif ch == '\x1b':
+                        self.pause()
+                        self.prompt_time += (time() - pause_start)
+                        self.locked -= 1
+                        return
                 print_loc('     ', self.y+1, self.x+37)
                 print_loc('                    ', self.y+2, self.x+30)
                 tmp = prompt(self.y, self.x, self.text)
