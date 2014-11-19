@@ -269,10 +269,10 @@ class prompt(object):
         def _print_box(self):
                 # Prompt box
                 print '\033[0m'
-                print_loc(tl_corner+h_bar*9+tr_corner,  self.y-2, self.x-2)
-                print_loc(v_bar,                        self.y-1, self.x-2)
-                print_loc(tr_corner,                    self.y-1, self.x+81)
-                print_loc(bl_square_corner+h_bar*72,    self.y-1, self.x+8)
+                print_loc(tl_corner+h_bar*82+tr_corner,  self.y-1, self.x-2)
+                #print_loc(v_bar,                        self.y-1, self.x-2)
+                #print_loc(v_bar,                    self.y-1, self.x+81)
+                #print_loc(bl_square_corner+h_bar*72,    self.y-1, self.x+8)
                 print_loc(bl_corner,                    self.y+4, self.x-2)
                 print_loc(br_corner,                    self.y+4, self.x+81)
                 print_loc(h_bar*82,                     self.y+4, self.x-1)
@@ -281,6 +281,5 @@ class prompt(object):
                 print_loc(v_bar+' ' * 82+v_bar,       self.y+2, self.x-2)
                 print_loc(v_bar+' ' * 82+v_bar,       self.y+3, self.x-2)
                 print '\033[0m'
-                print '\033[4m'
-                print '\033[1m'
-                print_loc('Old man', self.y-1, self.x)
+                print '\033[1m\033[4m'
+                #print_loc('Old man', self.y-1, self.x)
