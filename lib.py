@@ -71,6 +71,11 @@ class prompt(object):
                         self.head += 1
                         self.head_x = 0
                         self.head_y += 1
+                        if self.head_y > 3:
+                                self.head_y = 0
+                                #self.tail_y = 1
+                                #self.tail_x = 0
+                                #print_loc(' ' * 80, self.y, self.x)
                 elif self.text[self.head] == '[':
                         self.text_color = "\033[0m\033[96m\033[4m"
                         print self.text_color
@@ -92,12 +97,12 @@ class prompt(object):
                 if self.locked:
                         return
                 self.tail_start_time = time()
-                if self.tail_y > self.lines:
+                if self.tail > self.lines * 80:
                         pass
                 elif self.tail_x > 80:
                         self.tail += 1
                         self.tail_x = 0
-                        self.tail_y += 1
+                        self.tail_y = (self.tail_y + 1) % 4
                 else:
                         whitespace = ' ' * (self.tail_x)
                         print "\033[0m"
