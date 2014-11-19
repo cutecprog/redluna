@@ -6,7 +6,7 @@ from time import time
 from re import compile, match, sub
 import sys
 
-command_list = compile('(^forsake game stint)\s*$|(^spare)\s*$|(^spare as )(\w+)\s*$')
+command_list = compile('(^end game stint)\s*$|(^spare)\s*$|(^spare as )(\w+)\s*$')
 
 def print_loc(text, y, x):
         print("\033[%s;%sH" % (y,x) + text)
@@ -166,7 +166,7 @@ class prompt(object):
                 print '\033[0m'
                 print_loc('\033[1mCommands:\033[0m',   2, 2)
                 print '\033[0m\033[1m\033[92m'
-                print_loc('forsake game stint',        3, 2)
+                print_loc('end game stint',        3, 2)
                 print_loc('spare',                     4, 2)
                 print_loc('spare as [filename]',       5, 2)
                 print '\033[0m\033[96m\033[4m'
@@ -178,8 +178,6 @@ class prompt(object):
                 print_loc('inquire about link',        6, 28)
 
         def pause(self):
-                #if self.locked:
-                #        return
                 self.locked += 1
                 pause_start = time()
                 print '\033[0m\033[1m'
@@ -189,27 +187,25 @@ class prompt(object):
                 print_loc('|'+' ' * 82+'|',       self.y+3, self.x-2)
                 print_loc('PAUSE',                self.y+1, self.x+37)
                 print '\033[0m'
-                print_loc('Press a key to start', self.y+2, self.x+30)
+                print_loc('e - end game stint'+' '*8+'[space] - continue'+' '*8+'s - spare', self.y+2, self.x+8)
                 ch = sys.stdin.read(1)
                 if ch == '[':
                         ch = sys.stdin.read(1)
                 elif ch == 's':
                         save()
-                elif ch == 'q':
+                elif ch == 'e':
                         exit()
-                elif ch == '\x1b':
+                elif ch == ' ':
+                        print_loc('     ', self.y+1, self.x+37)
+                        print_loc(' '*61, self.y+2, self.x+8)
+                        tmp = prompt(self.y, self.x, self.text)
+                        tmp.head = self.tail
+                        tmp.head_x = self.tail_x
+                        tmp.head_y = self.tail_y
+                        while tmp.head < self.head:
+                                tmp.head_pass()
+                else:
                         self.pause()
-                        self.prompt_time += (time() - pause_start)
-                        self.locked -= 1
-                        return
-                print_loc('     ', self.y+1, self.x+37)
-                print_loc('                    ', self.y+2, self.x+30)
-                tmp = prompt(self.y, self.x, self.text)
-                tmp.head = self.tail
-                tmp.head_x = self.tail_x
-                tmp.head_y = self.tail_y
-                while tmp.head < self.head:
-                        tmp.head_pass()
                 self.prompt_time += (time() - pause_start)
                 self.locked -= 1
 
