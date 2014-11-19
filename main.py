@@ -18,28 +18,13 @@ error_message = ""
 size = popen('stty size','r').read()
 
 def main():
-        global error_message
         story = None
-        rows, cols = size.split()
-        rows = int(rows)
-        cols = int(cols)
-        if rows < 16 or cols < 80:
-                error_message += "\033[91m\033[1mError:\033[0m screen is smaller than 16x80\n"
-                return
-        y = (rows - 7)/2
-        if y < 8:
-                y = 8
-        x = (cols - 80)/2 + 1
         with open('data/start', 'r') as f:
-                story = prompt(y, x, f.read())
+                story = prompt(stty_center(), f.read())
         init()
-        #print story.links
         story.display()
         story.pause()
-        if size != popen('stty size','r').read():
-                error_message += "\033[91m\033[1mError:\033[0m screen size changed\n"
-                exit()
-
+        stty_check()
         t = threading.Thread(target=loop, args=[story])
         t.daemon = True
         t.start()
@@ -57,8 +42,7 @@ def init():
         system('clear')
 
 def loop(story):
-        global error_message
-        last_window_check = time()
+        last_stty_check = time()
         while True:
                 #story.debug()
                 if time()-story.head_start_time > .1:
@@ -66,12 +50,29 @@ def loop(story):
                 if time() - story.prompt_time > 5.0 and                        \
                                         time()-story.tail_start_time > .09:
                         story.tail_pass()
-                if time() - last_window_check > 2:
-                        if size == popen('stty size','r').read():
-                                last_window_check = time()
-                        else:
-                                error_message += "\033[91m\033[1mError:\033[0m screen size changed\n"
-                                exit()
+                if time() - last_stty_check > 2:
+                        stty_check()
+                        last_stty_check = time()
+
+def stty_check():
+        global error_message
+        if size != popen('stty size','r').read():
+                error_message += "\033[91m\033[1mError:\033[0m screen size changed\n"
+                exit()
+
+def stty_center():
+        global error_message
+        rows, cols = size.split()
+        rows = int(rows)
+        cols = int(cols)
+        if rows < 16 or cols < 80: # stty invalid
+                error_message += "\033[91m\033[1mError:\033[0m screen is smaller than 16x80\n"
+                return
+        y = (rows - 7)/2
+        if y < 8:
+                y = 8
+        x = (cols - 80)/2 + 1
+        return y, x
 
 # Exit code
 @register

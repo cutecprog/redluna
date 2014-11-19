@@ -25,14 +25,14 @@ def save(filename = str(int(time()))):
         exit()
 
 class prompt(object):
-        def __init__(self, y, x, text, start_head = 0, start_tail = 5):
+        def __init__(self, pos, text, start_head = 0, start_tail = 5):
                 self.text = text
                 self.length = len(self.text)
                 self.links = ""
                 self._generate_links()
                 self.lines = len(self.text.split('\n'))
-                self.y          = y
-                self.x          = x
+                self.y          = pos[0]
+                self.x          = pos[1]
                 self.head       = 0
                 self.head_x     = 0
                 self.head_y     = 0
@@ -232,7 +232,7 @@ class prompt(object):
                                 break
                 print_loc('     ',   self.y+1, self.x+37)
                 print_loc(' ' * 61,  self.y+2, self.x+8)
-                tmp = prompt(self.y, self.x, self.text)
+                tmp = prompt((self.y, self.x), self.text)
                 tmp.head = self.tail
                 tmp.head_x = self.tail_x
                 tmp.head_y = self.tail_y
