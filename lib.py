@@ -166,7 +166,7 @@ class prompt(object):
                 print '\033[0m'
                 print_loc('\033[1mCommands:\033[0m',   2, 2)
                 print '\033[0m\033[1m\033[92m'
-                print_loc('end game stint',        3, 2)
+                print_loc('end game stint',            3, 2)
                 print_loc('spare',                     4, 2)
                 print_loc('spare as [filename]',       5, 2)
                 print '\033[0m\033[96m\033[4m'
@@ -213,16 +213,7 @@ class prompt(object):
                 self.locked += 1
                 filename = 'data/'+'_'.join(link.split(' '))
                 with open(filename, 'r') as f:
-                        super_text = ""
-                        while True:
-                                line = f.readline()
-                                if line[0] != '!':
-                                        self.text = super_text + line
-                                        break
-                                line = line[1:-1]      # remove ! and \n
-                                line = line.strip(' ')
-                                super_text =  + ' '    # add space
-                        self.text += f.read()
+                        self.text = f.read()
                 self.length = len(self.text)
                 self._generate_links()
                 self.lines = len(self.text.split('\n'))
