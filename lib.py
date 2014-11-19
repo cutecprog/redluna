@@ -127,7 +127,7 @@ class prompt(object):
 
                 """
                 ch = sys.stdin.read(1)
-                if ch == '\x1b':                        # escape
+                if ch == '\033':                          # escape
                         self.pause()
                 elif ch == '\r':                          # return
                         if self.user_input == "":
@@ -206,24 +206,25 @@ class prompt(object):
                 print_loc('PAUSE',                self.y+1, self.x+37)
                 print '\033[0m'
                 print_loc('e - end game stint'+' '*8+'[space] - continue'+' '*8+'s - spare', self.y+2, self.x+8)
-                ch = sys.stdin.read(1)
-                if ch == '[':
+                while True:
                         ch = sys.stdin.read(1)
-                elif ch == 's':
-                        save()
-                elif ch == 'e':
-                        exit()
-                elif ch == ' ':
-                        print_loc('     ', self.y+1, self.x+37)
-                        print_loc(' '*61, self.y+2, self.x+8)
-                        tmp = prompt(self.y, self.x, self.text)
-                        tmp.head = self.tail
-                        tmp.head_x = self.tail_x
-                        tmp.head_y = self.tail_y
-                        while tmp.head < self.head:
-                                tmp.head_pass()
-                else:
-                        self.pause()
+                        if ch == '[':
+                                ch = sys.stdin.read(1)
+                                break
+                        elif ch == 's':
+                                save()
+                        elif ch == 'e':
+                                exit()
+                        elif ch == ' ':
+                                break
+                print_loc('     ', self.y+1, self.x+37)
+                print_loc(' '*61, self.y+2, self.x+8)
+                tmp = prompt(self.y, self.x, self.text)
+                tmp.head = self.tail
+                tmp.head_x = self.tail_x
+                tmp.head_y = self.tail_y
+                while tmp.head < self.head:
+                        tmp.head_pass()
                 self.prompt_time += (time() - pause_start)
                 self.locked -= 1
 
