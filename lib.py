@@ -57,12 +57,12 @@ class prompt(object):
                 print_loc("tail:",          5, 62)
                 print_loc("x:",             6, 65)
                 print_loc("y:",             7, 65)
-                print_loc(str(self.head)+ "  ",   2, 86)
-                print_loc(str(self.head_x)+ "  ", 3, 86)
-                print_loc(str(self.head_y)+ "  ", 4, 86)
-                print_loc(str(self.tail)+ "  ",   5, 86)
-                print_loc(str(self.tail_x)+ "  ", 6, 86)
-                print_loc(str(self.tail_y)+ "  ", 7, 86)
+                print_loc(str(self.head)   + "  ", 2, 86)
+                print_loc(str(self.head_x) + "  ", 3, 86)
+                print_loc(str(self.head_y) + "  ", 4, 86)
+                print_loc(str(self.tail)   + "  ", 5, 86)
+                print_loc(str(self.tail_x) + "  ", 6, 86)
+                print_loc(str(self.tail_y) + "  ", 7, 86)
                 self.locked -= 1
 
         def head_pass(self):
@@ -172,7 +172,7 @@ class prompt(object):
                 else:
                         print '\033[0m'
                 # Display new user input line
-                print_loc(self.user_input+'\033[0m\033[1m < ', self.y + 5, self.x)
+                print_loc(self.user_input+'\033[0m\033[7m \033[0m ', self.y + 5, self.x)
                 self.locked -= 1
 
         def display(self):
@@ -180,9 +180,9 @@ class prompt(object):
                 print '\033[0m'
                 print '\033[1m'
                 if self.x >= 3:
-                        print_loc('>  <', self.y+5, self.x-2)
+                        print_loc('# \033[0m\033[7m \033[0m', self.y+5, self.x-2)
                 else:
-                        print_loc(' <', self.y+5, self.x)
+                        print_loc('\033[0m\033[7m \033[0m', self.y+5, self.x)
                 print '\033[0m\033[1m'
                 print_loc('Commands:',                 2,  2)
                 print_loc('Key commands:',             2, 60)
