@@ -5,6 +5,7 @@
 from time import time
 from re import compile, match, sub
 import sys
+import os
 
 command_list = compile('(^end game stint)\s*$|(^spare)\s*$|(^spare as )(\w+)\s*$')
 
@@ -126,7 +127,7 @@ class prompt(object):
                 """ Get a character and change user input line accordingly.
 
                 """
-                ch = sys.stdin.read(1)
+                ch = os.read(sys.stdin.fileno(), 4)
                 if ch == '\033':                          # escape
                         self.pause()
                 elif ch == '\r':                          # return

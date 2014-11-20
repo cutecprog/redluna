@@ -48,14 +48,14 @@ def loop(story):
                 if time() - story.prompt_time > 5.0 and                        \
                                         time()-story.tail_start_time > .09:
                         story.tail_pass()
-                if time() - last_stty_check > 2:
+                if time() - last_stty_check > 6:
                         stty_check()
                         last_stty_check = time()
 
 def stty_check():
         global error_message
         if size != popen('stty size','r').read():
-                error_message += "screen size changed\n"
+                error_message += "screen size changed during runtime\n"
                 exit()
 
 def stty_center():
