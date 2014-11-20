@@ -244,11 +244,9 @@ class prompt(object):
 
         def reset(self, link):
                 self.locked += 1
-                filename = 'data/'+'_'.join(link.split(' '))
-                with open(filename, 'r') as f:
-                        self.text = f.read()
-                self.length = len(self.text)
+                self._load_text(link)
                 self._generate_links()
+                self.length = len(self.text)
                 self.head       = 0
                 self.head_x     = 0
                 self.head_y     = 0
@@ -298,3 +296,7 @@ class prompt(object):
                         print_loc(v_bar     + ' '   * 82 + v_bar,     self.y+3, self.x-2)
                         print_loc(bl_corner + h_bar * 82 + br_corner, self.y+4, self.x-2)
 
+        def _load_text(self, link):
+                filename = 'data/'+'_'.join(link.split(' '))
+                with open(filename, 'r') as f:
+                        self.text = f.read()
