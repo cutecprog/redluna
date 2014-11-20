@@ -30,7 +30,6 @@ class prompt(object):
                 self.length = len(self.text)
                 self.links = ""
                 self._generate_links()
-                self.lines = len(self.text.split('\n'))
                 self.y          = pos[0]
                 self.x          = pos[1]
                 self.head       = 0
@@ -250,7 +249,6 @@ class prompt(object):
                         self.text = f.read()
                 self.length = len(self.text)
                 self._generate_links()
-                self.lines = len(self.text.split('\n'))
                 self.head       = 0
                 self.head_x     = 0
                 self.head_y     = 0
