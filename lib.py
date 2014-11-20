@@ -25,8 +25,9 @@ def save(filename = str(int(time()))):
         exit()
 
 class prompt(object):
-        def __init__(self, pos, text, start_head = 0, start_tail = 5):
-                self.text = text
+        def __init__(self, pos, link = "", start_head = 0, start_tail = 5):
+                self.text = ""
+                self._load_text(link)
                 self.length = len(self.text)
                 self.links = ""
                 self._generate_links()
@@ -233,7 +234,9 @@ class prompt(object):
                                 break
                 print_loc('     ',   self.y+1, self.x+37)
                 print_loc(' ' * 61,  self.y+2, self.x+8)
-                tmp = prompt((self.y, self.x), self.text)
+                tmp = prompt((self.y, self.x))
+                tmp.text = self.text
+                tmp.length = self.length
                 tmp.head = self.tail
                 tmp.head_x = self.tail_x
                 tmp.head_y = self.tail_y
@@ -245,8 +248,8 @@ class prompt(object):
         def reset(self, link):
                 self.locked += 1
                 self._load_text(link)
-                self._generate_links()
                 self.length = len(self.text)
+                self._generate_links()
                 self.head       = 0
                 self.head_x     = 0
                 self.head_y     = 0
@@ -297,6 +300,8 @@ class prompt(object):
                         print_loc(bl_corner + h_bar * 82 + br_corner, self.y+4, self.x-2)
 
         def _load_text(self, link):
+                if link == "":
+                        return
                 filename = 'data/'+'_'.join(link.split(' '))
                 with open(filename, 'r') as f:
                         self.text = f.read()

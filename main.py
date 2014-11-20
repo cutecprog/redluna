@@ -18,10 +18,8 @@ error_message = ""
 size = popen('stty size','r').read()
 
 def main():
-        story = None
-        with open('data/start', 'r') as f:
-                story = prompt(stty_center(), f.read())
         init()
+        story = prompt(stty_center(), 'start')
         story.display()
         story.pause()
         stty_check()
