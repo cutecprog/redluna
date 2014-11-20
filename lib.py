@@ -167,12 +167,14 @@ class prompt(object):
                 # Highlight valid user input
                 if self.links.match(self.user_input.lower()):
                         print '\033[0;96;4m'
+                        print_loc(self.user_input+'\033[0;1m < \033[0m ', self.y + 5, self.x)
                 elif command_list.match(self.user_input):
                         print '\033[0;1;92m'
+                        print_loc(self.user_input+'\033[0;1m < \033[0m ', self.y + 5, self.x)
                 else:
                         print '\033[0m'
-                # Display new user input line
-                print_loc(self.user_input+'\033[0;7m \033[0m ', self.y + 5, self.x)
+                        # Display new user input line
+                        print_loc(self.user_input+'\033[0;7m \033[0m  ', self.y + 5, self.x)
                 self.locked -= 1
 
         def display(self):
