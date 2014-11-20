@@ -130,6 +130,8 @@ class prompt(object):
                 ch = os.read(sys.stdin.fileno(), 4)
                 if ch == '\033':                          # escape
                         self.pause()
+                elif ch[0] == '\033':
+                        return
                 elif ch == '\r':                          # return
                         if self.user_input == "":
                                 return
@@ -161,6 +163,7 @@ class prompt(object):
                                 return
                         self.user_input += ' '
                 elif len(self.user_input) >= 80:        # too long
+                        self.user_input[:80]
                         return
                 else:                                   # all else
                         self.user_input += ch
