@@ -57,7 +57,7 @@ def loop(story):
 def stty_check():
         global error_message
         if size != popen('stty size','r').read():
-                error_message += "\033[91m\033[1mError:\033[0m screen size changed\n"
+                error_message += "screen size changed\n"
                 exit()
 
 def stty_center():
@@ -66,8 +66,8 @@ def stty_center():
         rows = int(rows)
         cols = int(cols)
         if rows < 16 or cols < 80: # stty invalid
-                error_message += "\033[91m\033[1mError:\033[0m screen is smaller than 16x80\n"
-                return
+                error_message += "screen is smaller than 16x80\n"
+                exit()
         y = (rows - 7)/2
         if y < 8:
                 y = 8
@@ -83,7 +83,9 @@ def goodbye():
                 tcsetattr(fd, TCSADRAIN, old_settings)
                 system('clear')
         if error_message != "":
-                print error_message
+                for line in error_message.split('\n')[:-1]:
+                        stderr.write("\033[91m\033[1mError:\033[0m "+line+'\n')
+                print ""
 
 if __name__ == "__main__":
         from sys import argv
