@@ -85,7 +85,7 @@ class prompt(object):
                                         self.tail_y = -4 # So that (tail_y+1)%4 == 1
                                         print_loc(' ' * 80, self.y, self.x)
                 elif self.text[self.head] == '[':
-                        self.text_color = "\033[0m\033[96m\033[4m"
+                        self.text_color = "\033[0;96;4m"
                         print self.text_color
                         self.head += 1
                 elif self.text[self.head] == ']':
@@ -166,13 +166,13 @@ class prompt(object):
                 self.locked += 1
                 # Highlight valid user input
                 if self.links.match(self.user_input.lower()):
-                        print '\033[0m\033[96m\033[4m'
+                        print '\033[0;96;4m'
                 elif command_list.match(self.user_input):
-                        print '\033[0m\033[1m\033[92m'
+                        print '\033[0;1;92m'
                 else:
                         print '\033[0m'
                 # Display new user input line
-                print_loc(self.user_input+'\033[0m\033[7m \033[0m ', self.y + 5, self.x)
+                print_loc(self.user_input+'\033[0;7m \033[0m ', self.y + 5, self.x)
                 self.locked -= 1
 
         def display(self):
@@ -180,17 +180,17 @@ class prompt(object):
                 print '\033[0m'
                 print '\033[1m'
                 if self.x >= 3:
-                        print_loc('# \033[0m\033[7m \033[0m', self.y+5, self.x-2)
+                        print_loc('# \033[0;7m \033[0m', self.y+5, self.x-2)
                 else:
-                        print_loc('\033[0m\033[7m \033[0m', self.y+5, self.x)
-                print '\033[0m\033[1m'
+                        print_loc('\033[0;7m \033[0m', self.y+5, self.x)
+                print '\033[0;1m'
                 print_loc('Commands:',                 2,  2)
                 print_loc('Key commands:',             2, 60)
-                print '\033[0m\033[1m\033[92m'
+                print '\033[0;1;92m'
                 print_loc('end game stint',            3,  2)
                 print_loc('spare',                     4,  2)
                 print_loc('spare as [filename]',       5,  2)
-                print '\033[0m\033[96m\033[4m'
+                print '\033[0;96;4m'
                 print_loc('link',                      6,  2)
                 print '\033[0m'
                 print_loc('quit without saving',       3, 28)

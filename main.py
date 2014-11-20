@@ -84,7 +84,7 @@ def goodbye():
                 system('clear')
         if error_message != "":
                 for line in error_message.split('\n')[:-1]:
-                        stderr.write("\033[91m\033[1mError:\033[0m "+line+'\n')
+                        stderr.write("\033[0;91;1mError:\033[0m "+line+'\n')
                 print ""
 
 if __name__ == "__main__":
