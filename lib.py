@@ -130,7 +130,9 @@ class prompt(object):
                 ch = os.read(sys.stdin.fileno(), 4)
                 if ch == '\033':                          # escape
                         self.pause()
-                elif ch[0] == '\033':
+                elif '\033' in ch:
+                        return
+                elif '\t' in ch:
                         return
                 elif ch == '\r':                          # return
                         if self.user_input == "":
@@ -153,6 +155,7 @@ class prompt(object):
                         self.locked += 1
                         print '\033[0m'
                         print_loc(' '*80, self.y+5, self.x+2)
+                        #print_loc(' '*80, self.y+6, 0)
                         self.locked -= 1
                 elif ch == '\x7f':                      # backspace
                         if self.user_input == "":
@@ -226,11 +229,8 @@ class prompt(object):
                                                + ' ' * 8 + 's - spare',        \
                                                self.y+2, self.x+8)
                 while True:
-                        ch = sys.stdin.read(1)
-                        if ch == '[':
-                                ch = sys.stdin.read(1)
-                                break
-                        elif ch == 's':
+                        ch = os.read(sys.stdin.fileno(), 4)
+                        if ch == 's':
                                 save()
                         elif ch == 'e':
                                 exit()
