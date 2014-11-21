@@ -128,13 +128,16 @@ class prompt(object):
 
                 """
                 ch = os.read(sys.stdin.fileno(), 4)
-                if ch == '\033':                          # escape
+                if ch == '\033':                        # escape
                         self.pause()
                 elif '\033' in ch:
                         return
-                elif '\t' in ch:
+                elif '\t' in ch:                        # tab
                         return
-                elif ch == '\r':                          # return
+                elif len(self.user_input) >= 80:        # too long
+                        self.user_input[:80]
+                        return
+                elif ch == '\r':                        # return
                         if self.user_input == "":
                                 return
                         command = command_list.match(self.user_input)
@@ -165,9 +168,6 @@ class prompt(object):
                         if self.user_input == "":
                                 return
                         self.user_input += ' '
-                elif len(self.user_input) >= 80:        # too long
-                        self.user_input[:80]
-                        return
                 else:                                   # all else
                         self.user_input += ch
                 self.locked += 1
