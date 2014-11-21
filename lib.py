@@ -150,9 +150,7 @@ class prompt(object):
                         elif command.group(3):
                                 save(command.group(4))
                         link = self.links.match(self.user_input.lower())
-                        if not link:
-                                pass
-                        else:
+                        if link:
                                 self.reset(link.group(0))
                         self.user_input = ""
                         self.locked += 1
@@ -166,6 +164,8 @@ class prompt(object):
                         self.user_input = self.user_input[:-1]
                 elif ch == ' ':                         # space
                         if self.user_input == "":
+                                return
+                        elif self.user_input[-1] == ' ':
                                 return
                         self.user_input += ' '
                 else:                                   # all else

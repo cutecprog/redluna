@@ -9,7 +9,7 @@ from atexit import register  # For clean up function
 from os import system, popen
 from tty import setraw
 from termios import tcsetattr, tcgetattr, TCSADRAIN
-from sys import stdin, stderr
+from sys import stdin, stderr, stdout
 
 # Globals
 fd = None
@@ -77,13 +77,13 @@ def stty_center():
 def goodbye():
         if fd or old_settings:
                 system('setterm -cursor on')
-                print '\033[0m'
                 tcsetattr(fd, TCSADRAIN, old_settings)
                 system('clear')
         if error_message != "":
                 for line in error_message.split('\n')[:-1]:
                         stderr.write("\033[0;91;1mError:\033[0m "+line+'\n')
                 print ""
+        stdout.write('\033[0m')
 
 if __name__ == "__main__":
         from sys import argv
