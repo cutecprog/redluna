@@ -17,7 +17,6 @@ bl_corner = b'\xe2\x95\xb0'
 br_corner = b'\xe2\x95\xaf'
 tl_corner = b'\xe2\x95\xad'
 tr_corner = b'\xe2\x95\xae'
-bl_square_corner = b'\xe2\x94\x94'
 
 fd = stdin.fileno()
 old_settings = tcgetattr(fd)
