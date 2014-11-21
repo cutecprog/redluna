@@ -279,7 +279,7 @@ class prompt(object):
                         if ch == '[':
                                 links += "(^"
                         elif ch == ']':
-                                links += ")\s*$|"
+                                links += ")$|"
                                 index += 1
                         elif links[-1:] != '|' and links != "":
                                 links += ch
