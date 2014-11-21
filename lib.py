@@ -4,9 +4,8 @@
 
 from time import time
 from re import compile, match, sub
-import sys
-import os
-from os import system, popen
+from sys import stdin, stdout, stderr
+from os import system, popen, read
 from termios import tcsetattr, tcgetattr, TCSADRAIN
 from tty import setraw
 
@@ -20,7 +19,7 @@ tl_corner = b'\xe2\x95\xad'
 tr_corner = b'\xe2\x95\xae'
 bl_square_corner = b'\xe2\x94\x94'
 
-fd = sys.stdin.fileno()
+fd = stdin.fileno()
 old_settings = tcgetattr(fd)
 error_message = ""
 size = popen('stty size','r').read()
@@ -36,7 +35,7 @@ def stty_center():
         if rows < 16 or cols < 80: # stty invalid
                 #error_message += "screen is smaller than 16x80\n"
                 line = "screen is smaller than 16x80\n"
-                sys.stderr.write("\033[0;91;1mError:\033[0m "+line+'\n')
+                stderr.write("\033[0;91;1mError:\033[0m "+line+'\n')
                 exit()
         y = (rows - 7)/2
         if y < 8:
@@ -82,9 +81,9 @@ class prompt(object):
                         tcsetattr(fd, TCSADRAIN, old_settings)
                 if error_message != "":
                         for line in error_message.split('\n')[:-1]:
-                                sys.stderr.write("\033[0;91;1mError:\033[0m "+line+'\n')
+                                stderr.write("\033[0;91;1mError:\033[0m "+line+'\n')
                         print ""
-                sys.stdout.write('\033[0m')
+                stdout.write('\033[0m')
 
         def debug(self):
                 if self.locked:
@@ -166,7 +165,7 @@ class prompt(object):
                 """ Get a character and change user input line accordingly.
 
                 """
-                ch = os.read(sys.stdin.fileno(), 4)
+                ch = read(fd, 4)
                 if ch == '\033':                        # escape
                         self.pause()
                 elif '\033' in ch:
@@ -268,7 +267,7 @@ class prompt(object):
                                                + ' ' * 8 + 's - spare',        \
                                                self.y+2, self.x+8)
                 while True:
-                        ch = os.read(sys.stdin.fileno(), 4)
+                        ch = read(fd, 4)
                         if ch == 's':
                                 self._save()
                         elif ch == 'e':
