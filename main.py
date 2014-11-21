@@ -5,24 +5,16 @@
 from lib import prompt
 import threading
 from time import time
-from atexit import register  # For clean up function
-from os import system, popen
-from tty import setraw
-from termios import tcsetattr, tcgetattr, TCSADRAIN
-from sys import stdin, stderr, stdout
-
-# Globals
-error_message = ""
-size = popen('stty size','r').read()
+from os import system
+from atexit import register
 
 def main():
         #init()
         system('clear')
-        story = prompt(stty_center(), 'start')
+        story = prompt('start')
         register(story.goodbye)
         story.display()
         story.pause()
-        stty_check()
         t = threading.Thread(target=loop, args=[story])
         t.daemon = True
         t.start()
@@ -41,26 +33,6 @@ def loop(story):
                 if time() - last_stty_check > 6:
                         stty_check()
                         last_stty_check = time()
-
-def stty_check():
-        global error_message
-        if size != popen('stty size','r').read():
-                error_message += "screen size changed during runtime\n"
-                exit()
-
-def stty_center():
-        global error_message
-        rows, cols = size.split()
-        rows = int(rows)
-        cols = int(cols)
-        if rows < 16 or cols < 80: # stty invalid
-                error_message += "screen is smaller than 16x80\n"
-                exit()
-        y = (rows - 7)/2
-        if y < 8:
-                y = 8
-        x = (cols - 80)/2 + 1
-        return y, x
 
 if __name__ == "__main__":
         from sys import argv

@@ -6,7 +6,7 @@ from time import time
 from re import compile, match, sub
 import sys
 import os
-from os import system
+from os import system, popen
 from termios import tcsetattr, tcgetattr, TCSADRAIN
 from tty import setraw
 
@@ -23,12 +23,35 @@ bl_square_corner = b'\xe2\x94\x94'
 fd = sys.stdin.fileno()
 old_settings = tcgetattr(fd)
 error_message = ""
+size = popen('stty size','r').read()
 
 def print_loc(text, y, x):
         print("\033[%s;%sH" % (y,x) + text)
 
+def stty_center():
+        global error_message
+        rows, cols = size.split()
+        rows = int(rows)
+        cols = int(cols)
+        if rows < 16 or cols < 80: # stty invalid
+                #error_message += "screen is smaller than 16x80\n"
+                line = "screen is smaller than 16x80\n"
+                sys.stderr.write("\033[0;91;1mError:\033[0m "+line+'\n')
+                exit()
+        y = (rows - 7)/2
+        if y < 8:
+                y = 8
+        x = (cols - 80)/2 + 1
+        return y, x
+
+def stty_check():
+        global error_message
+        if size != popen('stty size','r').read():
+                error_message += "screen size changed during runtime\n"
+                exit()
+
 class prompt(object):
-        def __init__(self, pos, link = "", start_head = 0, start_tail = 5):
+        def __init__(self, link = "", pos = stty_center(), start_head = 0, start_tail = 5):
                 self.text = ""
                 self._load_text(link)
                 self.length = len(self.text)
@@ -54,6 +77,7 @@ class prompt(object):
 
         def goodbye(self):
                 if fd or old_settings:
+                        system('clear')
                         system('setterm -cursor on')
                         tcsetattr(fd, TCSADRAIN, old_settings)
                 if error_message != "":
@@ -251,9 +275,10 @@ class prompt(object):
                                 self._save(0)
                         elif ch == ' ':
                                 break
+                stty_check()
                 print_loc('     ',   self.y+1, self.x+37)
                 print_loc(' ' * 61,  self.y+2, self.x+8)
-                tmp = prompt((self.y, self.x))
+                tmp = prompt("",(self.y, self.x))
                 tmp.text = self.text
                 tmp.length = self.length
                 tmp.head = self.tail
@@ -324,6 +349,7 @@ class prompt(object):
                 filename = 'data/'+'_'.join(link.split(' '))
                 with open(filename, 'r') as f:
                         self.text = f.read()
+
         def _save(self, filename = str(int(time()))):
                 """ Save data to file, set attribute prompt_time to 0 and exit()
 
