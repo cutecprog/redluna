@@ -305,6 +305,9 @@ class prompt(object):
                 with open(filename, 'r') as f:
                         self.text = f.read()
         def _save(self, filename = str(int(time()))):
+                """ Save data to file, set attribute prompt_time to 0 and exit()
+
+                """
                 if filename:
                         with open(filename, 'w') as f:
                                 f.write('null')
