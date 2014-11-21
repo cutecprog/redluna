@@ -20,11 +20,6 @@ bl_square_corner = b'\xe2\x94\x94'
 def print_loc(text, y, x):
         print("\033[%s;%sH" % (y,x) + text)
 
-def save(filename = str(int(time()))):
-        with open(filename, 'w') as f:
-                f.write('null')
-        exit()
-
 class prompt(object):
         def __init__(self, pos, link = "", start_head = 0, start_tail = 5):
                 self.text = ""
@@ -144,11 +139,11 @@ class prompt(object):
                         if not command:
                                 pass
                         elif command.group(1):
-                                exit()
+                                self._save(0)
                         elif command.group(2):
-                                save()
+                                self._save()
                         elif command.group(3):
-                                save(command.group(4))
+                                self._save(command.group(4))
                         link = self.links.match(self.user_input.lower())
                         if link:
                                 self.reset(link.group(0))
@@ -231,9 +226,9 @@ class prompt(object):
                 while True:
                         ch = os.read(sys.stdin.fileno(), 4)
                         if ch == 's':
-                                save()
+                                self._save()
                         elif ch == 'e':
-                                exit()
+                                self._save(0)
                         elif ch == ' ':
                                 break
                 print_loc('     ',   self.y+1, self.x+37)
@@ -309,3 +304,9 @@ class prompt(object):
                 filename = 'data/'+'_'.join(link.split(' '))
                 with open(filename, 'r') as f:
                         self.text = f.read()
+        def _save(self, filename = str(int(time()))):
+                if filename:
+                        with open(filename, 'w') as f:
+                                f.write('null')
+                self.prompt_time = 0
+                exit()

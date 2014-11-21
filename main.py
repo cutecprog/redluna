@@ -41,7 +41,7 @@ def init():
 
 def loop(story):
         last_stty_check = time()
-        while True:
+        while story.prompt_time:
                 #story.debug()
                 if time()-story.head_start_time > .1:
                         story.head_pass()
