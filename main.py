@@ -2,7 +2,7 @@
 # This file currently holds the entire game
 #-------------------------------------------------------------------------------
 
-from lib import prompt
+from lib import prompt, stty_check
 import threading
 from time import time
 from os import system
