@@ -6,6 +6,9 @@ from time import time
 from re import compile, match, sub
 import sys
 import os
+from os import system
+from termios import tcsetattr, tcgetattr, TCSADRAIN
+from tty import setraw
 
 command_list = compile('(^end game stint)\s*$|(^spare)\s*$|(^spare as )(\w+)\s*$')
 
@@ -16,6 +19,10 @@ br_corner = b'\xe2\x95\xaf'
 tl_corner = b'\xe2\x95\xad'
 tr_corner = b'\xe2\x95\xae'
 bl_square_corner = b'\xe2\x94\x94'
+
+fd = sys.stdin.fileno()
+old_settings = tcgetattr(fd)
+error_message = ""
 
 def print_loc(text, y, x):
         print("\033[%s;%sH" % (y,x) + text)
@@ -41,6 +48,19 @@ class prompt(object):
                 self.head_start_time = 0
                 self.tail_start_time = 0
                 self.locked = 0
+                print '\033[0m'
+                system('setterm -cursor off')
+                setraw(fd)
+
+        def goodbye(self):
+                if fd or old_settings:
+                        system('setterm -cursor on')
+                        tcsetattr(fd, TCSADRAIN, old_settings)
+                if error_message != "":
+                        for line in error_message.split('\n')[:-1]:
+                                sys.stderr.write("\033[0;91;1mError:\033[0m "+line+'\n')
+                        print ""
+                sys.stdout.write('\033[0m')
 
         def debug(self):
                 if self.locked:
